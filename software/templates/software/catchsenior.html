@@ -1,0 +1,7 @@
+<h1>this is catchsenior.html</h1>
+
+<form action="./recognize" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <p>name : <input type="text" id="name" name="name"></p>
+    <p>file : <input type="file" id="image" name="image"></p>
+    <input type="submit" value="Submit" />
+</form>
