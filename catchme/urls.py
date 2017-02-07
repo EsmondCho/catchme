@@ -1,7 +1,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from django.conf import settings
+from django.views.static import serve
+
 from .views import home
+
+
 urlpatterns = [
     # Examples:
     # url(r'^$', 'catchme.views.home', name='home'),
@@ -11,5 +16,5 @@ urlpatterns = [
 
     url(r'^$', home, name='home'),
     url(r'^software/', include('software.urls', namespace='software')),
-
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
 ]
