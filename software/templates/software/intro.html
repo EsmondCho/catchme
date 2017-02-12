@@ -1,1 +1,22 @@
-<h1>this is intro.html</h1>
+{% extends 'software/base.html' %}
+
+{% block content %}
+	<body class="index" style="background-color: #f9d636">
+
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<!-- Header -->
+		<header>
+		    <div class="container">
+		        <div class="intro-text">
+		            <div class="intro-heading">catch me!</div>
+		            <div class="intro-lead-in">Catch Me introduction</div>
+		            <center><img src="../../static/img/intro-img.jpg"></center>
+		            <a href="#" class="page-scroll btn btn-xl">Ranking</a>
+		        </div>
+		    </div>
+		</header>
+	</body>
+
+{% endblock content %}

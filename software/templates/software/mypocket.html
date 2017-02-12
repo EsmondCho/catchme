@@ -1,1 +1,11 @@
-<h1>this is mypocket.html</h1>
+{% extends 'software/base.html' %}
+
+{% block content %}
+	<body class="index" style="background-color: #ac775a">
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<center><img src="../../static/img/mypocket-img.jpg" class="img-top"></center>
+		<h1 class="text-center">this is mypocket.html</h1>
+	</body>
+{% endblock content %}

@@ -1,7 +1,21 @@
-<h1>this is catchsenior.html</h1>
+{% extends 'software/base.html' %}
 
-<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    <p>name : <input type="text" id="name" name="name"></p>
-    <p>file : <input type="file" id="image" name="image"></p>
-    <input type="submit" value="Submit" />
-</form>
+{% block content %}
+	<body class="index" style="background-color: #7ec9ac">
+
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<center><img src="../../static/img/catch-img.jpg" class="img-top"></center>
+		<h1 class="text-center">this is catchsenior.html</h1>
+
+		<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+		    <div class="col-md-6 col-md-offset-3">
+		        <input type="text" class="form-control form-group input-lg" placeholder="Name" id="name" name="name">
+		        <input type="file" id="image" name="image">
+		        <center><button type="submit" class="btn btn-xl">submit</button></center>
+		    </div>
+		</form>
+
+	</body>
+{% endblock content %}
