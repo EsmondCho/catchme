@@ -37,8 +37,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'software',
 )
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -112,3 +115,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""
+AWS_ACCESS_KEY = 'AKIAI6SL36NXAORJ2B4Q'
+AWS_SECRET_KEY = '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'
+S3_BUCKET = 'catchmesoongsil'
+REGION_NAME = 'ap-northeast-2'
+"""
