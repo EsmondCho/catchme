@@ -6,10 +6,6 @@ from django.shortcuts import render, redirect
 from .forms import ImageUploadForm
 from .models import Senior
 
-#from catchme.settings import AWS_ACCESS_KEY, AWS_SECRET_KEY, S3_BUCKET, REGION_NAME
-import boto3
-from boto3.session import Session
-
 from face_client import FaceClient
 
 
@@ -26,51 +22,21 @@ def catchsenior(request):
 
 
 def recognize(request):
-    if request.method == 'POST':
-        f = request.POST
-        form = ImageUploadForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            s = Senior.objects.create(
-                name = f['name'],
-                #image = form.cleaned_data['image']
-            )
-            s.save()
-            image_to_upload = request.FILES.get('image')
+    client = FaceClient('167bb22f8cd64970b6360b939fbba1fa', 'd367eb0cdbe94b02b1f68454607de387')
+    form = request.GET
+    result = client.faces_recognize('all', form['image_url'], namespace='senior')
+    name = result['photos'][0]['tags'][0]['uids'][0]['uid']
+    image_url = result['photos'][0]['url']
+    confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
 
-
-            cloudFilename = 'software/' + image_to_upload.name
-            s3 = boto3.resource('s3')
-            s3.Bucket('catchmesoongsil').put_object(Key=cloudFilename, Body=image_to_upload)
-
-            s3_client = boto3.client('s3')
-
-            #url = s3_client.generate_url(expires_in=0, query_auth=False, force_http=True)
+    return render(request, 'software/recognize.html', {'result' : result,
+                                                       'name' : name,
+                                                       'image_url' : image_url,
+                                                       'confidence' : confidence
+                                                       })
 
 
-            url = s3_client.generate_presigned_url(
-                ClientMethod='get_object',
-                Params={
-                    'Bucket': 'catchmesoongsil/software',
-                    'Key': image_to_upload.name
-                }
-            )
-
-            return HttpResponse(url)
-
-            #client = FaceClient('f2f4e3c754f940598fe1d5c3cfd8f626', '04632fe53d33463cb8dabeb0ccc6df64')
-            #image_url = url
-            #result = client.faces_recognize("esmond", image_url, namespace='senior')
-            #return render(request, 'software/recognize.html', {'result': image_url})
-
-            #client = FaceClient('f2f4e3c754f940598fe1d5c3cfd8f626', '04632fe53d33463cb8dabeb0ccc6df64')
-            #image_url = 'http://192.168.1.21:8000' + s.image.url
-            #result = client.faces_recognize("esmond", image_url, namespace='senior')
-            #return render(request, 'software/recognize.html', {'result': image_url})
-
-        return HttpResponseForbidden("form is invalid")
-    else:
-        return HttpResponseForbidden("allowed via POST")
 
 def rank(request):
     return render(request, 'software/rank.html', {})

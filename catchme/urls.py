@@ -9,7 +9,6 @@ from .views import home
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
     url(r'^$', home, name='home'),
     url(r'^software/', include('software.urls', namespace='software')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
