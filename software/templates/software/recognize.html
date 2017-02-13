@@ -6,7 +6,6 @@
 	    {% block navbar %}
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
-		
 		<div class="padding-top">
 	        <div class="col-md-4">
 	    		{% if confidence >= 60 %}
@@ -18,12 +17,18 @@
 	        <div class="senior-info col-md-7 box">
 	        	<h1>Recognize</h1>
 	        	<div class="col-md-8" style="padding-top: 50px">
-	        		<img src="../../static/img/messi.jpg" class="img img-responsive" alt="">
+	        		<img src="{{ image_url }}" class="img img-responsive" alt="">
 	        	</div>
 	        	<div class="col-md-4" style="padding-top: 100px">
-	        		<h1>{{confidence}}%</h1>
-		            <h3>Name: {{name}}</h3>
-		            <h3 class="text-muted">15학번</h3>
+					{% if confidence >= 60 %}
+						<h3>Confidence : {{ confidence }}</h3>
+						<h3>Name : {{ name }}</h3>
+						<h3>Hackbun : 15/16</h3>
+					{% else %}
+						<h3>Confidence : {{ confidence }}</h3>
+						<h3>Name : ???</h3>
+						<h3>Hackbun : ???</h3>
+					{% endif %}
 		        </div>
 		        <div style="padding-top: 400px">
         		    <div class="col-md-offset-1 col-md-8">
@@ -32,7 +37,7 @@
 			        <div class="col-md-2">
 			        	<button type="submit" class="btn btn-lg btn-success">My pocket</button>
 			        </div>
-			    </div>    
+			    </div>
 	        </div>
         </div>
 	</body>

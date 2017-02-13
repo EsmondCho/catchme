@@ -9,13 +9,20 @@
 	        <div class="col-md-4">
 	        	<img src="../../static/img/mypocket-img.jpg" class="padding-top">
 	        </div>
-	        <div class="col-md-offset-1 col-md-6 box scrollable">
-	            <h1 class="text-center">this is mypocket.html</h1>
-	            <h1 class="text-center">this is mypocket.html</h1>
-	            <h1 class="text-center">this is mypocket.html</h1>
-	            <h1 class="text-center">this is mypocket.html</h1>
-	            <h1 class="text-center">this is mypocket.html</h1>
-	        
+	        <div class="col-md-offset-1 col-md-6 box pre-scrollable">
+				<div class="row">
+					{% for senior in senior_list %}
+						<div class="card col-xs-6 col-md-4">
+							<a href="#" class="card-img-top thumbnail">
+								<img src="{{ senior.image }}">
+							</a>
+							<div class="card-block">
+								<h5 class="card-title">{{ senior.name }}</h5>
+								<p class="card-text">{{ senior.registered_time }}</p>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 	        </div>
 	    </div>
 	</body>
