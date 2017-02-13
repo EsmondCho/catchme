@@ -14,7 +14,11 @@ def introduction(request):
 
 
 def mypocket(request):
-    return render(request, 'software/mypocket.html', {})
+
+    senior_list = Senior.objects.all()
+
+    return render(request, 'software/mypocket.html', {'senior_list' : senior_list})
+
 
 
 def catchsenior(request):
@@ -36,8 +40,7 @@ def recognize(request):
             image = image_url
         ).save()
 
-    return render(request, 'software/recognize.html', {'result' : result,
-                                                       'name' : name,
+    return render(request, 'software/recognize.html', {'name' : name,
                                                        'image_url' : image_url,
                                                        'confidence' : confidence
                                                        })
