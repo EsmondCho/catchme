@@ -1,7 +1,7 @@
 {% extends 'software/base.html' %}
 
 {% block content %}
-	<body class="index" style="background-color: #7dc9aa">
+	<body class="index" style="background-color: #78ccac">
 
 	    {% block navbar %}
 	    	{% include 'software/navbar.html' %}
@@ -9,17 +9,32 @@
 		<!-- <p>result</p> -->
 		<p>{{ name }}</p>
 		<p>{{ image_url }}</p>
-		<p>{{ confidence }}</p>
+		
 		<div class="padding-top">
 	        <div class="col-md-4">
-	        	<img src="../../static/img/failed-img.png" class="padding-top" style="width: 400px;">
+	    		{% if confidence >= 60 %}
+		        	<img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;">
+		        {% elif confidence < 60 %}
+		        	<img src="../../static/img/failed-img.png" class="padding-top" style="width: 400px;">
+		        {% endif %}
 	        </div>
 	        <div class="senior-info col-md-7 box">
-	        	<img src="../../static/img/messi.jpg" class="img img-responsive" alt="">
-	            <h1>Name: Messi</h1>
-	            <h3 class="text-muted">15학번</h3>
-	            <h3 class="text-muted">slkdjfkalsjfals</h3>
-	            <h3 class="text-muted">slkdjfkalsjfals</h3>
+	        	<h1>Recognize</h1>
+	        	<div class="col-md-8" style="padding-top: 50px">
+	        		<img src="../../static/img/messi.jpg" class="img img-responsive" alt="">
+	        	</div>
+	        	<div class="col-md-4" style="padding-top: 150px">
+		            <h3>Name: Messi</h3>
+		            <h3 class="text-muted">15학번</h3>
+		        </div>
+		        <div style="padding-top: 400px">
+        		    <div class="col-md-offset-1 col-md-8">
+			        	<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
+			        </div>
+			        <div class="col-md-2">
+			        	<button type="submit" class="btn btn-lg btn-success">My pocket</button>
+			        </div>
+			    </div>    
 	        </div>
         </div>
 	</body>
