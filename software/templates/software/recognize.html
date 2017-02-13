@@ -6,9 +6,6 @@
 	    {% block navbar %}
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
-		<!-- <p>result</p> -->
-		<p>{{ name }}</p>
-		<p>{{ image_url }}</p>
 		
 		<div class="padding-top">
 	        <div class="col-md-4">
@@ -23,8 +20,9 @@
 	        	<div class="col-md-8" style="padding-top: 50px">
 	        		<img src="../../static/img/messi.jpg" class="img img-responsive" alt="">
 	        	</div>
-	        	<div class="col-md-4" style="padding-top: 150px">
-		            <h3>Name: Messi</h3>
+	        	<div class="col-md-4" style="padding-top: 100px">
+	        		<h1>{{confidence}}%</h1>
+		            <h3>Name: {{name}}</h3>
 		            <h3 class="text-muted">15학번</h3>
 		        </div>
 		        <div style="padding-top: 400px">

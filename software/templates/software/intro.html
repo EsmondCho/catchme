@@ -7,19 +7,20 @@
 		{% endblock %}
 		<!-- Header -->
 		<header>
-		    <div class="container">
-		        <div class="intro-text">
-		            <div class="intro-heading">catch me!</div>
-<!-- 		            <div class="intro-lead-in">Catch Me introduction</div> -->
-		            <center><img src="../../static/img/intro-img.jpg"></center>
-
+			<center>
+			    <div class="container">
+			        <div class="intro-text">
+			            <div class="intro-heading">catch me!</div>
+			            <img src="../../static/img/intro-img.jpg">
+			        </div>
+	        	
             		{% if user.is_authenticated %}
-			            <a href="#" class="btn btn-xl">Log In</a>
+			            <a href="#" class="btn btn-xl">Log Out</a>
 			        {% else %}
-			        	<a href="#" class="btn btn-xl">Log Out</a>
-			        {% end %}
-		        </div>
-		    </div>
+			        	<a href="#" class="btn btn-xl">Log In</a>
+			        {% endif %}		       
+			    </div>
+		    </center>
 		</header>
 	</body>
 
