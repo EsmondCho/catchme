@@ -1,6 +1,26 @@
-<h1>this is recognize.html</h1>
+{% extends 'software/base.html' %}
 
-<p>result</p>
-<p>{{ name }}</p>
-<p>{{ image_url }}</p>
-<p>{{ confidence }}</p>
+{% block content %}
+	<body class="index" style="background-color: #7dc9aa">
+
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<!-- <p>result</p> -->
+		<p>{{ name }}</p>
+		<p>{{ image_url }}</p>
+		<p>{{ confidence }}</p>
+		<div class="padding-top">
+	        <div class="col-md-4">
+	        	<img src="../../static/img/failed-img.png" class="padding-top" style="width: 400px;">
+	        </div>
+	        <div class="senior-info col-md-7 box">
+	        	<img src="../../static/img/messi.jpg" class="img img-responsive" alt="">
+	            <h1>Name: Messi</h1>
+	            <h3 class="text-muted">15학번</h3>
+	            <h3 class="text-muted">slkdjfkalsjfals</h3>
+	            <h3 class="text-muted">slkdjfkalsjfals</h3>
+	        </div>
+        </div>
+	</body>
+{% endblock content %}
