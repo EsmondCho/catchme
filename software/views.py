@@ -14,7 +14,20 @@ def introduction(request):
 
 
 def mypocket(request):
-    return render(request, 'software/mypocket.html', {})
+
+    form = request.POST
+
+    if form.get('confidence', False) > 60:
+        s = Senior.objects.create(
+            name = form['name'],
+            image = form['image_url'],
+            comment= form['comment']
+        ).save()
+
+    senior_list = Senior.objects.all()
+
+    return render(request, 'software/mypocket.html', {'senior_list' : senior_list})
+
 
 
 def catchsenior(request):
@@ -30,14 +43,7 @@ def recognize(request):
     image_url = result['photos'][0]['url']
     confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
 
-    if confidence > 60:
-        s = Senior.objects.create(
-            name = name,
-            image = image_url
-        ).save()
-
-    return render(request, 'software/recognize.html', {'result' : result,
-                                                       'name' : name,
+    return render(request, 'software/recognize.html', {'name' : name,
                                                        'image_url' : image_url,
                                                        'confidence' : confidence
                                                        })
