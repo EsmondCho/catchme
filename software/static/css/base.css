@@ -1,4 +1,4 @@
-/*1. navbar 2. header 3. btn-xl 4. h1~h6 font 5. padding-top 6. white-box 7. senior*/
+/*1. navbar 2. intro-text 3. btn-xl 4. h1~h6 font 5. padding-top 6. white-box 7. senior*/
 
 
 /*navbar*/
@@ -83,20 +83,10 @@
   }
 }
 
-/*header*/
-
-header .intro-text {
+/*intro-text*/
+.intro-text {
   text-align: center;
   color: rgba(51, 51, 51, 0.88);
-}
-header .intro-text .intro-lead-in {
-  font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-style: italic;
-  font-size: 22px;
-  line-height: 22px;
-  margin-bottom: 25px;
-}
-header .intro-text .intro-heading {
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   font-weight: 700;
@@ -105,18 +95,8 @@ header .intro-text .intro-heading {
   margin-bottom: 25px;
 }
 @media (min-width: 768px) {
-  header .intro-text {
+  .intro-text {
     padding-top: 100px;
-    padding-bottom: 200px;
-  }
-  header .intro-text .intro-lead-in {
-    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-style: italic;
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 25px;
-  }
-  header .intro-text .intro-heading {
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
@@ -137,7 +117,6 @@ header .intro-text .intro-heading {
   font-weight: 700;
   border-radius: 3px;
   font-size: 18px;
-  padding: 20px 40px;
 }
 .btn-xl:hover,
 .btn-xl:focus,
@@ -219,3 +198,14 @@ h6 {
 .senior-info p {
   margin-top: 0;
 }
+
+.scrollable {
+                height: 95%;
+                overflow: auto;
+            }
+
+.max-height {
+                height: 95%;
+            }
+
+

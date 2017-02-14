@@ -5,23 +5,16 @@
 	    {% block navbar %}
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
-		<!-- Header -->
-		<header>
-			<center>
-			    <div class="container">
-			        <div class="intro-text">
-			            <div class="intro-heading">catch me!</div>
-			            <img src="../../static/img/intro-img.jpg">
-			        </div>
-	        	
-            		{% if user.is_authenticated %}
-			            <a href="#" class="btn btn-xl">Log Out</a>
-			        {% else %}
-			        	<a href="#" class="btn btn-xl">Log In</a>
-			        {% endif %}		       
-			    </div>
-		    </center>
-		</header>
+		
+        <div class="intro-text">catch me!</div>
+        <center><img src="../../static/img/intro-img.jpg"></center>
+        <center>
+		{% if user.is_authenticated %}
+            <a href="#" class="btn btn-xl">Log Out</a>
+        {% else %}
+        	<a href="#" class="btn btn-xl">Log In</a>
+        {% endif %}
+        </center>		   
 	</body>
 
 {% endblock content %}
