@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
 
 from .forms import ImageUploadForm
+from .models import Catching
 from .models import Senior
 
 from face_client import FaceClient
@@ -19,15 +20,15 @@ def mypocket(request):
     form = request.POST
 
     if form.get('confidence', False) > 60:
-        s = Senior.objects.create(
+        s = Catching.objects.create(
             name = form['name'],
             image = form['image_url'],
             comment= form['comment']
         ).save()
 
-    senior_list = Senior.objects.all()
+    catching_list = Catching.objects.all()
 
-    return render(request, 'software/mypocket.html', {'senior_list' : senior_list})
+    return render(request, 'software/mypocket.html', {'catching_list' : catching_list})
 
 
 
