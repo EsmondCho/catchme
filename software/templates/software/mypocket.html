@@ -10,15 +10,16 @@
 	        	<img src="../../static/img/mypocket-img.jpg" class="padding-top">
 	        </div>
 	        <div class="col-md-offset-1 col-md-6 box scrollable">
+	        	<h3 style="text-align: right;">잡은 개수: ???/ 100</h3>
 				<div class="row">
-					{% for senior in senior_list %}
-						<div class="card col-xs-6 col-md-4">
-							<a href="#" class="card-img-top thumbnail">
-								<img src="{{ senior.image }}">
+					{% for catching in catching_list %}
+						<div class="card col-xs-6 col-md-4 senior-info">
+							<a href="/software/senior/{{catching.senior.id}}">
+								<img src="{{ catching.image }}" class="card-img-top">
 							</a>
 							<div class="card-block">
-								<h5 class="card-title">{{ senior.name }}</h5>
-								<p class="card-text">{{ senior.registered_time }}</p>
+								<h5 class="card-title">{{ catching.name }}</h5>
+								<p class="card-text">{{ catching.registered_time }}</p>
 							</div>
 						</div>
 					{% endfor %}
