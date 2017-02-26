@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from .forms import ImageUploadForm
 from .models import Catching
 from .models import Senior
+from .models import Chatting
 
 from face_client import FaceClient
 
@@ -30,7 +31,19 @@ def mypocket(request):
 
     return render(request, 'software/mypocket.html', {'catching_list' : catching_list})
 
+def chatting(request):
+    form = request.POST
 
+    chatting = Chatting.objects.create(
+  #      name=form['name'],
+        chat=form['chat'],
+        senior = Senior.objects.get(pk=form['senior'])
+        )
+
+    senior = get_object_or_404(Senior, pk=chatting.senior.pk)
+    catching_list = Catching.objects.filter(senior=chatting.senior)
+    chatting_list = Chatting.objects.filter(senior=chatting.senior)
+    return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list, 'chatting_list': chatting_list})
 
 def catchsenior(request):
     return render(request, 'software/catchsenior.html', {})
