@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 
 from .forms import ImageUploadForm
 from .models import Senior
@@ -48,6 +49,21 @@ def recognize(request):
                                                        'confidence' : confidence
                                                        })
 
+def senior(request, pk):
+    senior = get_object_or_404(Senior, pk=pk)
+    catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk))
+    chatting_list = Chatting.objects.filter(senior=Senior.objects.get(pk=pk))
+    return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list, 'chatting_list': chatting_list})
+
+def seniors(request):
+    seniors = Senior.objects.all()
+    return render(request, 'software/seniors.html', {'seniors' : seniors})
+
+def seniors_search(request):
+    result = request.GET['searched_name']
+    seniors = Senior.objects.filter(name=result)
+    return render(request, 'software/seniors.html', {'seniors': seniors})
+    
 def training(request):
     return render(request, 'software/training.html', {})
 

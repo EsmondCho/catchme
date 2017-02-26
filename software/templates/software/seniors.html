@@ -1,0 +1,41 @@
+{% extends 'software/base.html' %}
+
+{% block content %}
+	<body class="index" style="background-color: #196b6a">
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<div class="padding-top max-height">
+	        <div class="col-md-4">
+	        	<img src="../../../static/img/senior-img.jpg" class="padding-top">
+	        </div>
+	        <div class="col-md-offset-1 col-md-6 box scrollable">
+        		<form action="{% url 'software:seniors_search' %}" method="GET">{% csrf_token %}
+		        	<div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
+		                <div class="input-group stylish-input-group">
+		                    <input type="text" id="searched_name" name="searched_name" class="form-control"  placeholder="검색할 선배의 이름을 입력하세요." >
+		                    <span class="input-group-addon">
+		                    	<button type="submit">
+									<span class="glyphicon glyphicon-search"></span>
+								</button>
+		                    </span>
+		                </div>
+			        </div>
+			    </form>
+	        	<div class="row">
+					{% for senior in seniors %}
+						<div class="card col-xs-6 col-md-4 senior-info">
+							<a href="/software/senior/{{senior.id}}">
+								<img src="{{ senior.image }}" class="card-img-top">
+							</a>
+							<div class="card-block">
+								<h5 class="card-title">{{ senior.name }}</h5>
+								<p class="card-text">{{ senior.student_id }}학번</p>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+	        </div>
+	    </div>
+	</body>
+{% endblock content %}
