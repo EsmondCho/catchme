@@ -21,11 +21,11 @@
 	        	</div>
 	        	<div class="col-md-4" style="padding-top: 100px">
 					{% if confidence >= 60 %}
-						<h3>Confidence : {{ confidence }}</h3>
+						<h3>Confidence : {{ confidence }} %</h3>
 						<h3>Name : {{ name }}</h3>
-						<h3>Hackbun : 15/16</h3>
+						<h3>Hackbun : {{ student_id }}</h3>
 					{% else %}
-						<h3>Confidence : {{ confidence }}</h3>
+						<h3>Confidence : {{ confidence }} %</h3>
 						<h3>Name : ???</h3>
 						<h3>Hackbun : ???</h3>
 					{% endif %}
@@ -33,7 +33,7 @@
 		        <div style="padding-top: 400px">
 					<form action="{% url 'software:mypocket' %}" method="POST" name="frm" id="frm">{% csrf_token %}
 						<input type="hidden" name="confidence" value="{{ confidence }}">
-						<input type="hidden" name="name" value="{{ name }}">
+						<input type="hidden" name="student_id" value="{{ student_id }}">
 						<input type="hidden" name="image_url" value="{{ image_url }}">
 						<div class="col-md-offset-1 col-md-8">
 							<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">

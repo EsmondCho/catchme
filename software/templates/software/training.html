@@ -2,6 +2,7 @@
 
 <form action="{% url 'software:training_result' %}" method="GET">{% csrf_token %}
     <p>name : <input type="text" id="name" name="name"></p>
+    <p>student_id : <input type="integer" id="student_id" name="student_id"></p>
     <p>image_url : <input type="text" id="image_url" name="image_url"></p>
     <input type="submit" value="Training" />
 </form>
