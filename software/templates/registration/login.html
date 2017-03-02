@@ -2,7 +2,7 @@
 
     <h1>login page</h1>
 
-    <form action="/account/" method="POST">{% csrf_token %}
+    <form action="." method="POST">{% csrf_token %}
         {% if form.errors %}
         <p class="errornote">Wrong! Please correct the errors below</p>
         {% endif %}
