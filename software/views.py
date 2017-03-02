@@ -6,11 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import ImageUploadForm
 
-from .models import Catching
-from .models import Senior
-from .models import Chatting
-from .models import User
-
+from .models import *
 from face_client import FaceClient
 
 
@@ -20,15 +16,38 @@ def introduction(request):
 
 @login_required
 def mypocket(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
 
-    form = request.POST
+    if request.method == 'POST':
+        form = request.POST
 
-    senior = Senior.objects.get(student_id=form['student_id'])
-    catching = Catching.objects.filter(senior=senior).update(comment=form['comment'])
+        senior = Senior.objects.get(student_id=form['student_id'])
+        senior.caught_count += 1
+        senior.save()
 
-    catching_list = Catching.objects.all()
+        profile.catching_count += 1
+        profile.save()
 
-    return render(request, 'software/mypocket.html', {'catching_list' : catching_list})
+        ex_catching = Catching.objects.filter(user=profile).filter(senior=senior).filter(is_in_pocket=True)
+        if ex_catching:
+            ex_catching[0].is_in_pocket = False
+
+        catching = Catching.objects.create(
+            image=form['image_url'],
+            is_in_pocket=True,
+            confidence=form['confidence'],
+            comment=form['comment'],
+            senior=senior,
+            user=profile
+        )
+        catching.save()
+
+    catching_count = profile.catching_count
+    catching_list = Catching.objects.filter(user=profile).filter(is_in_pocket=True)
+
+    return render(request, 'software/mypocket.html', {'catching_list': catching_list,
+                                                      'catching_count': catching_count})
 
 
 @login_required
@@ -55,30 +74,29 @@ def catchsenior(request):
 @login_required
 def recognize(request):
 
-    client = FaceClient('167bb22f8cd64970b6360b939fbba1fa', 'd367eb0cdbe94b02b1f68454607de387')
-    form = request.GET
-    result = client.faces_recognize('all', form['image_url'], namespace='senior2')
-    student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
-    senior = Senior.objects.filter(student_id=student_id).first()
-    name = senior.name
-    image_url = result['photos'][0]['url']
-    confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+    if request.method == 'POST':
+        form = request.POST
 
-    s = Catching.objects.create(
-        image = form['image_url'],
-        senior = senior,
-        user = User.objects.first()
-    )
+        client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+        result = client.faces_recognize('all', form['image_url'], namespace='senior')
 
-    if form.get('confidence', False) > 60:
-        s.update(is_succeed=True)
+        student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
+        image_url = result['photos'][0]['url']
+        confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+
+        senior = Senior.objects.get(student_id=student_id)
+        senior_id = senior.id
+        senior_name = senior.name
+
+        return render(request, 'software/recognize.html', {'senior_name': senior_name,
+                                                           'image_url': image_url,
+                                                           'confidence': confidence,
+                                                           'student_id': student_id
+                                                           })
+    else:
+        return HttpResponseForbidden('Allowed via POST')
 
 
-    return render(request, 'software/recognize.html', {'name' : name,
-                                                       'image_url' : image_url,
-                                                       'confidence' : confidence,
-                                                       'student_id' : student_id
-                                                       })
 
 @login_required
 def senior(request, pk):
@@ -108,22 +126,28 @@ def training(request):
 
 @login_required
 def training_result(request):
-        form = request.GET
 
-    if not Senior.objects.filter(student_id=form['student_id']):
-        Senior.objects.create(
-            name = form['name'],
-            image = form['image_url'],
-            student_id = form['student_id']
-            )
+    if request.method == 'POST':
+        form = request.POST
 
-    client = FaceClient('ddc12042e3c940f3a0d1a4d264da9447', 'fd724e4460c848e3ae784faaf5342904')
-    response = client.faces_detect(form['image_url'])
-    tid = response['photos'][0]['tags'][0]['tid']
-    client.tags_save(tids=tid, uid=form['student_id']+'@senior2', label=form['student_id'])
-    result = client.faces_train(form['student_id']+'@senior2')
+        if not Senior.objects.filter(student_id=form['student_id']):
+            senior = Senior.objects.create(
+                name=form['name'],
+                image=form['image_url'],
+                student_id=form['student_id']
+                )
+            senior.save()
 
-    return render(request, 'software/training_result.html', {'result' : result})
+        client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+        response = client.faces_detect(form['image_url'])
+        tid = response['photos'][0]['tags'][0]['tid']
+        client.tags_save(tids=tid, uid=form['student_id']+'@senior', label=form['student_id'])
+        result = client.faces_train(form['student_id']+'@senior')
+
+        return render(request, 'software/training_result.html', {'result': result})
+
+    else:
+        return HttpResponseForbidden('Allowed via POST')
 
 
 @login_required

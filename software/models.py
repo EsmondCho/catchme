@@ -6,14 +6,15 @@ class Catching(models.Model):
     image = models.TextField(null=True)
     comment = models.TextField(null=True)
     like_count = models.IntegerField(default=0)
-    is_succeed = models.BooleanField(default=False)
+    is_in_pocket = models.BooleanField(default=False)
+    confidence = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
     senior = models.ForeignKey('Senior')
     user = models.ForeignKey('Profile')
 
 
 class Senior(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=15)
     image = models.TextField(null=True)
     student_id = models.IntegerField(null=True)
     like_count = models.IntegerField(default=0)

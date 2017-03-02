@@ -9,7 +9,7 @@
 		<center><img src="../../static/img/catch-img.jpg" class="padding-top"></center>
 		<h1 class="text-center">this is catchsenior.html</h1>
 
-		<form action="{% url 'software:recognize' %}" method="GET">{% csrf_token %}
+		<form action="{% url 'software:recognize' %}" method="POST">{% csrf_token %}
 		    <div class="col-md-6 col-md-offset-3">
 		        <input type="text" class="form-control form-group input-lg" placeholder="Image URL" id="image_url" name="image_url">
 		        <center><button type="submit" class="btn btn-xl">submit</button></center>
