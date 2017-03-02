@@ -10,9 +10,12 @@
         <center><img src="../../static/img/intro-img.jpg"></center>
         <center>
 		{% if user.is_authenticated %}
-            <a href="#" class="btn btn-xl">Log Out</a>
+            <p>hi!! {{ user.get_short_name }}</p>
+            <a href="{% url 'logout' %}" class="btn btn-xl">Log Out</a>
+            <a href="{% url 'password_change' %}" class="btn btn-xl">password_change</a>
         {% else %}
-        	<a href="#" class="btn btn-xl">Log In</a>
+        	<a href="{% url 'login' %}" class="btn btn-xl">Log In</a>
+        	<a href="{% url 'register' %}" class="btn btn-xl">Register</a>
         {% endif %}
         </center>		   
 	</body>
