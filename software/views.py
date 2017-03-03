@@ -33,14 +33,10 @@ def mypocket(request):
         if ex_catching:
             ex_catching[0].is_in_pocket = False
 
-        catching = Catching.objects.create(
-            image=form['image_url'],
-            is_in_pocket=True,
-            confidence=form['confidence'],
-            comment=form['comment'],
-            senior=senior,
-            user=profile
-        )
+        catching = Catching.objects.filter(user=profile).filter(senior=senior)[0]
+        catching.comment = form['comment']
+        catching.senior = senior
+        catching.is_in_pocket = True
         catching.save()
 
     catching_count = profile.catching_count
@@ -75,18 +71,33 @@ def catchsenior(request):
 def recognize(request):
 
     if request.method == 'POST':
-        form = request.POST
+        user = request.user
+        profile = Profile.objects.get(user=user)
+
+        f = request.POST
+        form = ImageUploadForm(request.POST, request.FILES)
+
+        catching = Catching.objects.create(
+            image=form.cleaned_data['image'],
+            senior="",
+            user=profile,
+            comment=""
+        )
+        catching.save()
+
+        image_url = 'http://150.95.135.222' + catching.image.url
 
         client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
-        result = client.faces_recognize('all', form['image_url'], namespace='senior')
+        result = client.faces_recognize('all', image_url, namespace='senior')
 
         student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
-        image_url = result['photos'][0]['url']
         confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
 
         senior = Senior.objects.get(student_id=student_id)
-        senior_id = senior.id
         senior_name = senior.name
+
+        catching.senior = senior
+        catching.save()
 
         return render(request, 'software/recognize.html', {'senior_name': senior_name,
                                                            'image_url': image_url,
@@ -128,23 +139,33 @@ def training(request):
 def training_result(request):
 
     if request.method == 'POST':
-        form = request.POST
 
-        if not Senior.objects.filter(student_id=form['student_id']):
-            senior = Senior.objects.create(
-                name=form['name'],
-                image=form['image_url'],
-                student_id=form['student_id']
-                )
-            senior.save()
+        f = request.POST
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
 
-        client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
-        response = client.faces_detect(form['image_url'])
-        tid = response['photos'][0]['tags'][0]['tid']
-        client.tags_save(tids=tid, uid=form['student_id']+'@senior', label=form['student_id'])
-        result = client.faces_train(form['student_id']+'@senior')
+            if not Senior.objects.filter(student_id=f['student_id']):
+                senior = Senior.objects.create(
+                    name=f['name'],
+                    image=form.cleaned_data['image'],
+                    student_id=f['student_id']
+                    )
+                senior.save()
+            else:
+                senior = Senior.objects.get(student_id=f['student_id'])
 
-        return render(request, 'software/training_result.html', {'result': result})
+            image_url = 'http://150.95.135.222' + senior.image.url
+
+            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+            response = client.faces_detect(image_url)
+            tid = response['photos'][0]['tags'][0]['tid']
+            client.tags_save(tids=tid, uid=f['student_id']+'@senior', label=f['student_id'])
+            result = client.faces_train(f['student_id']+'@senior')
+
+            return render(request, 'software/training_result.html', {'result': result})
+
+        else:
+            return HttpResponseForbidden('form is invalid')
 
     else:
         return HttpResponseForbidden('Allowed via POST')
