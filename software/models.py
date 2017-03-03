@@ -10,14 +10,14 @@ class Catching(models.Model):
     is_in_pocket = models.BooleanField(default=False)
     confidence = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
-    senior = models.ForeignKey('Senior')
-    user = models.ForeignKey('Profile')
+    senior = models.ForeignKey('Senior', null=True)
+    profile = models.ForeignKey('Profile')
 
     def save(self, force_insert=False, force_update=False, using=None):
         for field in self._meta.fields:
             if field.name == 'image':
-                field.upload_to = 'catching_images/%s' % self.user.username
-        super(Senior, self).save()
+                field.upload_to = 'catching_images/%s' % self.profile.user.username
+        super(Catching, self).save()
 
 
 class Senior(models.Model):

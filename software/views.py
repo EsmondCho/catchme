@@ -29,18 +29,18 @@ def mypocket(request):
         profile.catching_count += 1
         profile.save()
 
-        ex_catching = Catching.objects.filter(user=profile).filter(senior=senior).filter(is_in_pocket=True)
+        ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
         if ex_catching:
             ex_catching[0].is_in_pocket = False
 
-        catching = Catching.objects.filter(user=profile).filter(senior=senior)[0]
+        catching = Catching.objects.filter(profile=profile).filter(senior=senior)[0]
         catching.comment = form['comment']
         catching.senior = senior
         catching.is_in_pocket = True
         catching.save()
 
     catching_count = profile.catching_count
-    catching_list = Catching.objects.filter(user=profile).filter(is_in_pocket=True)
+    catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
 
     return render(request, 'software/mypocket.html', {'catching_list': catching_list,
                                                       'catching_count': catching_count})
@@ -76,34 +76,41 @@ def recognize(request):
 
         f = request.POST
         form = ImageUploadForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            catching = Catching.objects.create(
+                image=form.cleaned_data['image'],
+                senior=None,
+                profile=profile,
+                comment=""
+            )
+            catching.save()
 
-        catching = Catching.objects.create(
-            image=form.cleaned_data['image'],
-            senior="",
-            user=profile,
-            comment=""
-        )
-        catching.save()
+            image_url = 'http://150.95.135.222:8000' + catching.image.url
+            
+            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+            result = client.faces_recognize('all', image_url, namespace='senior')
 
-        image_url = 'http://150.95.135.222' + catching.image.url
+            student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
+            confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
 
-        client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
-        result = client.faces_recognize('all', image_url, namespace='senior')
+            if Senior.objects.filter(student_id=student_id):
+                senior = Senior.objects.get(student_id=student_id)
+                senior_name = senior.name
 
-        student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
-        confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+                catching.senior = senior
+                catching.save()
 
-        senior = Senior.objects.get(student_id=student_id)
-        senior_name = senior.name
+                return render(request, 'software/recognize.html', {'senior_name': senior_name,
+                                                                   'image_url': image_url,
+                                                                   'confidence': confidence,
+                                                                   'student_id': student_id
+                                                                   })
+            else:
+                return HttpResponseForbidden('This person is not in jigabmon')
+        else:
+            return HttpResponseForbidden('form is invalid')
 
-        catching.senior = senior
-        catching.save()
-
-        return render(request, 'software/recognize.html', {'senior_name': senior_name,
-                                                           'image_url': image_url,
-                                                           'confidence': confidence,
-                                                           'student_id': student_id
-                                                           })
     else:
         return HttpResponseForbidden('Allowed via POST')
 
@@ -154,7 +161,7 @@ def training_result(request):
             else:
                 senior = Senior.objects.get(student_id=f['student_id'])
 
-            image_url = 'http://150.95.135.222' + senior.image.url
+            image_url = 'http://150.95.135.222:8000' + senior.image.url
 
             client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
             response = client.faces_detect(image_url)
