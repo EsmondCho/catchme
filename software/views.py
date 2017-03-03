@@ -107,7 +107,7 @@ def recognize(request):
                                                                    'student_id': student_id
                                                                    })
             else:
-                return HttpResponseForbidden('This person is not in jigabmon')
+                return HttpResponseForbidden(student_id + ' This person is not in jigabmon')
         else:
             return HttpResponseForbidden('form is invalid')
 
@@ -119,7 +119,7 @@ def recognize(request):
 @login_required
 def senior(request, pk):
     senior = get_object_or_404(Senior, pk=pk)
-    catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk))
+    catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk)).filter(is_in_pocket=True)
     chatting_list = Chatting.objects.filter(senior=Senior.objects.get(pk=pk))
     return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list, 'chatting_list': chatting_list})
 
@@ -160,6 +160,8 @@ def training_result(request):
                 senior.save()
             else:
                 senior = Senior.objects.get(student_id=f['student_id'])
+                senior.image = form.cleaned_data['image']
+                senior.save()
 
             image_url = 'http://150.95.135.222:8000' + senior.image.url
 

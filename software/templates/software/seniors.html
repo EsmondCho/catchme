@@ -26,7 +26,7 @@
 					{% for senior in seniors %}
 						<div class="card col-xs-6 col-md-4 senior-info">
 							<a href="/software/senior/{{senior.id}}">
-								<img src="{{ senior.image }}" class="card-img-top">
+								<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="card-img-top">
 							</a>
 							<div class="card-block">
 								<h5 class="card-title">{{ senior.name }}</h5>

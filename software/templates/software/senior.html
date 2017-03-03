@@ -8,16 +8,16 @@
 		<div class="padding-top max-height">
 	        <div class="col-md-offset-1 col-md-4 senior-info">
         		<h1 class="white-text"> name: {{ senior.name }} </h1>
-	        	<img src="{{ senior.image }}" class="border-img" style="max-width: 300px">
+	        	<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
 	        </div>
 	        <div class="col-md-6 box scrollable">
 				<div class="row">
 					{% for catching in catching_list %}
 					<div class="card col-xs-6 col-md-4 senior-info">
-						<img src="{{ catching.image }}">
+						<img src="http://150.95.135.222:8000{{ catching.image.url }}">
 						<div class="card-block">
 							<div class="col-md-8">
-								<h5 class="card-title">잡은사람: {{ catching.user.name }}</h5>
+								<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>
 								<p class="card-text">{{ catching.comment }}</p>
 							</div>
 							<div class="col-md-4" style="padding-top: 10px">
