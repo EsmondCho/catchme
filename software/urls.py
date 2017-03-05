@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^training$', training, name='training'),
     url(r'^training_result$', training_result, name='training_result'),
 
-    url(r'^chatting$', chatting, name='chatting')
+    url(r'^catching/(?P<pk>[0-9]+)/$', catching, name='catching'),
 
 ]

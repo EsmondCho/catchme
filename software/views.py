@@ -47,19 +47,19 @@ def mypocket(request):
 
 
 @login_required
-def chatting(request):
-    form = request.POST
+def catching(request, pk):
+    if request.method == 'POST':
+        form = request.POST
+        chatting = Chatting.objects.create(
+      #      name=form['name'],
+            chat=form['chat'],
+            catching = Catching.objects.get(pk=pk)
+            )
 
-    chatting = Chatting.objects.create(
-  #      name=form['name'],
-        chat=form['chat'],
-        senior = Senior.objects.get(pk=form['senior'])
-        )
-
-    senior = get_object_or_404(Senior, pk=chatting.senior.pk)
-    catching_list = Catching.objects.filter(senior=chatting.senior)
-    chatting_list = Chatting.objects.filter(senior=chatting.senior)
-    return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list, 'chatting_list': chatting_list})
+    c = get_object_or_404(Catching, pk=pk)
+    catching = Catching.objects.get(pk=pk)
+    chatting_list = Chatting.objects.filter(catching=catching)
+    return render(request, 'software/catching.html', {'catching': catching, 'chatting_list': chatting_list})
 
 
 @login_required
@@ -120,8 +120,7 @@ def recognize(request):
 def senior(request, pk):
     senior = get_object_or_404(Senior, pk=pk)
     catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk)).filter(is_in_pocket=True)
-    chatting_list = Chatting.objects.filter(senior=Senior.objects.get(pk=pk))
-    return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list, 'chatting_list': chatting_list})
+    return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list})
 
 
 @login_required

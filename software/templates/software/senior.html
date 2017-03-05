@@ -14,7 +14,9 @@
 				<div class="row">
 					{% for catching in catching_list %}
 					<div class="card col-xs-6 col-md-4 senior-info">
-						<img src="http://150.95.135.222:8000{{ catching.image.url }}">
+						<a href="/software/catching/{{catching.id}}">
+							<img src="http://150.95.135.222:8000{{ catching.image.url }}">
+						</a>
 						<div class="card-block">
 							<div class="col-md-8">
 								<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>

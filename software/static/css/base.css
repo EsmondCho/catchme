@@ -240,3 +240,7 @@ h6 {
   border:0;
   background:transparent;
 }
+
+.text-center{
+  text-align: center;
+}
