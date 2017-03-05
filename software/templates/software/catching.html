@@ -11,17 +11,7 @@
 	        	<img src="http://150.95.135.222:8000{{ catching.senior.image.url }}" class="border-img" style="max-width: 300px">
 	        </div>
 			<div class="padding-top-sm">
-			    <div class="box scrollable">
-					<div class="row">
-						{% for chatting in chatting_list %}
-						<div class="card">
-							<div class="card-block text-center">
-								<h5 class="card-title">쓴 사람: </h5>
-								<p class="card-text">{{ chatting.chat }}</p>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
+				<div class="box scrollable">
 
 					<div>
 						<form action="{% url 'software:catching' catching.id %}" method="POST">{% csrf_token %}
@@ -33,9 +23,21 @@
 								<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="Submit">
 							</div>
 						</form>
-				    </div>
+					</div>
+					<br /><br />
+					<div class="row">
+						{% for chatting in chatting_list %}
+						<div class="card">
+							<div class="card-block text-center">
+								<h5 class="card-title">쓴 사람: {{ chatting.profile.user.username }}</h5>
+								<p class="card-text">{{ chatting.chat }}</p>
+								<p class="card-text">{{ chatting.modified_time }}
+							</div>
+						</div>
+						{% endfor %}
+					</div>
 				</div>
 			</div>
-	    </div>
+		</div>
 	</body>
 {% endblock content %}
