@@ -63,7 +63,7 @@ def catching(request, pk):
 
 
     c = get_object_or_404(Catching, pk=pk)
-    chatting_list = Chatting.objects.filter(catching=catching)
+    chatting_list = Chatting.objects.filter(catching=catching).order_by('-modified_time')
     return render(request, 'software/catching.html', {'catching': catching, 'chatting_list': chatting_list})
 
 
