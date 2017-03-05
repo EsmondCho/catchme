@@ -6,6 +6,7 @@ class Catching(models.Model):
     image = models.ImageField(upload_to='catching_image/', null=True)
     comment = models.TextField(null=True)
     like_count = models.IntegerField(default=0)
+    chatting_count = models.IntegerField(default=0)
     is_in_pocket = models.BooleanField(default=False)
     confidence = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)

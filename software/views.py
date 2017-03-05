@@ -48,16 +48,21 @@ def mypocket(request):
 
 @login_required
 def catching(request, pk):
+    catching = Catching.objects.get(pk=pk)
+
     if request.method == 'POST':
+        user = request.user
         form = request.POST
         chatting = Chatting.objects.create(
-      #      name=form['name'],
+            profile = Profile.objects.get(user=user),
             chat=form['chat'],
             catching = Catching.objects.get(pk=pk)
             )
+        catching.chatting_count += 1
+        catching.save()
+
 
     c = get_object_or_404(Catching, pk=pk)
-    catching = Catching.objects.get(pk=pk)
     chatting_list = Chatting.objects.filter(catching=catching)
     return render(request, 'software/catching.html', {'catching': catching, 'chatting_list': chatting_list})
 
