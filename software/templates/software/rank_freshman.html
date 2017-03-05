@@ -16,7 +16,7 @@
 			</ul>
 			{% for profile in profile_list %}
 				<p>student_id(username) : {{ profile.user.username }}</p>
-				<p>name : {{ profile.user.firstname }}</p>
+				<p>name : {{ profile.user.first_name }}</p>
 				<p>catching_count : {{ profile.catching_count }}</p>
 				<hr />
 			{% endfor %}
