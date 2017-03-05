@@ -132,6 +132,19 @@ def recognize(request):
 
 @login_required
 def senior(request, pk):
+    if request.method == 'POST':        
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        catching = Catching.objects.get(pk=request.POST['catching'])
+
+        if not Like.objects.filter(catching=catching).filter(profile=profile):
+            Like.objects.create(
+                profile=profile,
+                catching=catching
+                )
+            catching.like_count += 1
+            catching.save()
+
     senior = get_object_or_404(Senior, pk=pk)
     catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk)).filter(is_in_pocket=True)
     return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list})
