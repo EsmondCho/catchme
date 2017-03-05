@@ -8,11 +8,7 @@
 		{% endblock %}
 		<div class="padding-top">
 	        <div class="col-md-4">
-	    		{% if confidence >= 60 %}
-		        	<img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;">
-		        {% elif confidence < 60 %}
-		        	<img src="../../static/img/failed-img.png" class="padding-top" style="width: 400px;">
-		        {% endif %}
+	       		<img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;">
 	        </div>
 	        <div class="senior-info col-md-7 box">
 	        	<h1>Recognize</h1>
@@ -20,30 +16,64 @@
 	        		<img src="{{ image_url }}" class="img img-responsive" alt="">
 	        	</div>
 
-				{% if confidence >= 60 %}
-				    <div class="col-md-4" style="padding-top: 100px">
-						<h3>Confidence : {{ confidence }}%</h3>
-						<h3>Name : {{ senior_name }}</h3>
-						<h3>Hackbun : {{ student_id }}</h3>
+			<div class="col-md-4" style="padding-top: 100px">
+
+				<form action="{% url 'software:mypocket' %}" method="POST" name="frm" id="frm">{% csrf_token %}
+					<div class="input-group" style="height: auto;">
+						<span class="input-group-addon">
+					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
+						</span>
+						<strong>
+							<p class="form-control" aria-label="..." style="height: auto;">
+								Confidence : {{ confidence1 }}<br />
+								Name : {{ senior1_name }}<br />
+								Student_id : {{ student_id1 }}
+							</p>
+						</strong>
 					</div>
-					<div style="padding-top: 400px">
-						<form action="{% url 'software:mypocket' %}" method="POST" name="frm" id="frm">{% csrf_token %}
-							<input type="hidden" name="confidence" value="{{ confidence }}">
-							<input type="hidden" name="student_id" value="{{ student_id }}">
-							<input type="hidden" name="image_url" value="{{ image_url }}">
-							<div class="col-md-offset-1 col-md-8">
-								<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
-							</div>
-							<div class="col-md-2">
-								<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="To my Pocket">
-							</div>
-						</form>
+					<br />
+					<div class="input-group" style="height: auto;">
+						<span class="input-group-addon">
+					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
+						</span>
+						<strong>
+							<p class="form-control" aria-label="..." style="height: auto;">
+								Confidence : {{ confidence2 }}<br />
+								Name : {{ senior2_name }}<br />
+								Student_id : {{ student_id2 }}
+							</p>
+						</strong>
 					</div>
-				{% else %}
+					<br />
+					<div class="input-group" style="height: auto;">
+						<span class="input-group-addon">
+					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+						</span>
+						<strong>
+							<p class="form-control" aria-label="..." style="height: auto;">
+								Confidence : {{ confidence3 }}<br />
+								Name : {{ senior3_name }}<br />
+								Student_id : {{ student_id3 }}
+							</p>
+						</strong>
+					</div>
+					<br />
+				</div>
+				<div style="padding-top: 400px">
+					<input type="hidden" name="image_url" value="{{ image_url }}">
+					<div class="col-md-offset-1 col-md-8">
+						<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
+					</div>
+					<div class="col-md-2">
+						<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="To my Pocket">
+					</div>
+				</form>
+			</div>
+<!--
 					<div class="col-md-4" style="padding-top: 100px">
 						<h3>Confidence : {{ confidence }} %</h3>
-						<h3>Name : ???</h3>
-						<h3>Hackbun : ???</h3>
+						<h3>Name : {{ senior_name }}???</h3>
+						<h3>Hackbun : {{ student_id }}???</h3>
 					</div>
 					<div style="padding-top: 400px">
 						<form action="{% url 'home' %}" method="GET" name="frm" id="frm">{% csrf_token %}
@@ -52,7 +82,7 @@
 							</div>
 						</form>
 					</div>
-				{% endif %}
+-->
 	        </div>
         </div>
 	</body>

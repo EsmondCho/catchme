@@ -12,7 +12,8 @@ urlpatterns = [
 
     url(r'^recognize$', recognize, name='recognize'),
 
-    url(r'^rank$', rank, name='rank'),
+    url(r'^rank/freshman$', rank_freshman, name='rank_freshman'),
+    url(r'^rank/senior$', rank_senior, name='rank_senior'),
 
     url(r'^senior/(?P<pk>[0-9]+)/$', senior, name='senior'),
     url(r'^seniors$', seniors, name='seniors'),

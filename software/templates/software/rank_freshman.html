@@ -1,0 +1,26 @@
+{% extends 'software/base.html' %}
+
+{% block content %}
+	<body class="index" style="background-color: #f4cddb">
+	    {% block navbar %}
+	    	{% include 'software/navbar.html' %}
+		{% endblock %}
+		<div class="padding-top max-height">
+	        <div class="col-md-4">
+	        	<img src="../../static/img/rank-img.jpg" class="padding-top">
+	        </div>
+	        <div class="col-md-offset-1 col-md-6 box scrollable">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">Saenaegi</a></li>
+				<li role="presentation"><a href="/software/rank/senior">Senior</a></li>
+			</ul>
+			{% for profile in profile_list %}
+				<p>student_id(username) : {{ profile.user.username }}</p>
+				<p>name : {{ profile.user.firstname }}</p>
+				<p>catching_count : {{ profile.catching_count }}</p>
+				<hr />
+			{% endfor %}
+	        </div>
+        </div>
+	</body>
+{% endblock content %}

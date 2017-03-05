@@ -21,7 +21,7 @@ def mypocket(request):
 
     if request.method == 'POST':
         form = request.POST
-
+	
         senior = Senior.objects.get(student_id=form['student_id'])
         senior.caught_count += 1
         senior.save()
@@ -33,7 +33,8 @@ def mypocket(request):
         if ex_catching:
             ex_catching[0].is_in_pocket = False
 
-        catching = Catching.objects.filter(profile=profile).filter(senior=senior)[0]
+        catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
+
         catching.comment = form['comment']
         catching.senior = senior
         catching.is_in_pocket = True
@@ -44,7 +45,6 @@ def mypocket(request):
 
     return render(request, 'software/mypocket.html', {'catching_list': catching_list,
                                                       'catching_count': catching_count})
-
 
 @login_required
 def chatting(request):
@@ -91,23 +91,32 @@ def recognize(request):
             client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
             result = client.faces_recognize('all', image_url, namespace='senior')
 
-            student_id = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
-            confidence = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+            student_id1 = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
+            confidence1 = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+            senior1 = Senior.objects.get(student_id=student_id1)
+            senior1_name = senior1.name
 
-            if Senior.objects.filter(student_id=student_id):
-                senior = Senior.objects.get(student_id=student_id)
-                senior_name = senior.name
+            student_id2 = result['photos'][0]['tags'][0]['uids'][1]['uid'].split('@')[0]
+            confidence2 = result['photos'][0]['tags'][0]['uids'][1]['confidence']
+            senior2 = Senior.objects.get(student_id=student_id2)
+            senior2_name = senior2.name
 
-                catching.senior = senior
-                catching.save()
+            student_id3 = result['photos'][0]['tags'][0]['uids'][2]['uid'].split('@')[0]
+            confidence3 = result['photos'][0]['tags'][0]['uids'][2]['confidence']
+            senior3 = Senior.objects.get(student_id=student_id3)
+            senior3_name = senior3.name          
 
-                return render(request, 'software/recognize.html', {'senior_name': senior_name,
-                                                                   'image_url': image_url,
-                                                                   'confidence': confidence,
-                                                                   'student_id': student_id
-                                                                   })
-            else:
-                return HttpResponseForbidden(student_id + ' This person is not in jigabmon')
+            return render(request, 'software/recognize.html', {'image_url': image_url,
+                                                               'senior1_name': senior1_name,
+                                                               'confidence1': confidence1,
+                                                               'student_id1': student_id1,
+                                                               'senior2_name': senior2_name,
+                                                               'confidence2': confidence2,
+                                                               'student_id2': student_id2,
+                                                               'senior3_name': senior3_name,
+                                                               'confidence3': confidence3,
+                                                               'student_id3': student_id3,
+                                                              })
         else:
             return HttpResponseForbidden('form is invalid')
 
@@ -181,5 +190,17 @@ def training_result(request):
 
 
 @login_required
-def rank(request):
-    return render(request, 'software/rank.html', {})
+def rank_freshman(request):
+
+    profile_list = Profile.objects.order_by('-catching_count')
+    
+    return render(request, 'software/rank_freshman.html', {'profile_list': profile_list})
+
+
+@login_required
+def rank_senior(request):
+
+    senior_list = Senior.objects.order_by('-caught_count')
+    
+    return render(request, 'software/rank_senior.html', {'senior_list': senior_list})
+
