@@ -43,10 +43,10 @@ class Profile(models.Model):
 
 class Chatting(models.Model):
     chat = models.TextField(null=False)
-    user = models.ForeignKey('Profile', null=True)
-    senior = models.ForeignKey('Senior')
+    profile = models.ForeignKey('Profile', null=True)
+    catching = models.ForeignKey('Catching', null=True)
 
 
 class Like(models.Model):
-    user = models.ForeignKey('Profile')
+    profile = models.ForeignKey('Profile')
     catching = models.ForeignKey('Catching')
