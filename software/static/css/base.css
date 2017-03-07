@@ -54,7 +54,8 @@
   color: white;
   background-color: #fec503;
 }
-@media (min-width: 768px) {
+@media only screen
+and (min-width: 768px) {
   .navbar-custom {
     background-color: transparent;
     padding: 25px 0;
@@ -85,6 +86,7 @@
 
 /*intro-text*/
 .intro-text {
+  padding-top: 100px;
   text-align: center;
   color: rgba(51, 51, 51, 0.88);
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -96,13 +98,20 @@
 }
 @media (min-width: 768px) {
   .intro-text {
-    padding-top: 100px;
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 75px;
     line-height: 75px;
     margin-bottom: 50px;
+  }
+}
+@media only screen
+and (max-device-width: 500px) {
+  .intro-text {
+    font-size: 100px;
+    padding-top: 150px;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }
 
@@ -155,6 +164,13 @@ fieldset[disabled] .btn-xl.active {
   background-color: white;
 }
 
+@media only screen
+and (max-device-width: 500px) {
+  .btn-xl{
+    font-size: 35px;
+    width: 30%;
+  }
+}
 /*h1~h6 font*/
 
 h1,
@@ -174,6 +190,9 @@ h6 {
 }
 .padding-top-sm {
   padding-top: 50px;
+}
+.padding-top-lg {
+  padding-top: 200px;
 }
 
 /*white-box*/
@@ -218,9 +237,14 @@ h6 {
 }
 
 .max-height {
-  height: 95%;
+  height: 100%;
 }
-
+@media only screen
+and (max-device-width: 500px) {
+  .max-height {
+    height: 60%;
+  }
+}
 
 .card {
   padding: 10px;
@@ -243,4 +267,12 @@ h6 {
 
 .text-center{
   text-align: center;
+}
+
+@media only screen
+and (max-device-width: 500px) {
+  .full-img{
+    width: 100%;
+    z-index: 0;
+  }
 }
