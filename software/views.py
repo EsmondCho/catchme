@@ -15,23 +15,27 @@ def introduction(request):
 
 
 @login_required
-def mypocket(request):
-    user = request.user
+def mypocket(request, pk):
+
+    user = User.objects.get(pk=pk) 
     profile = Profile.objects.get(user=user)
 
     if request.method == 'POST':
         form = request.POST
 	
         senior = Senior.objects.get(student_id=form['student_id'])
+        ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
+        if ex_catching:
+            ex_catching[0].is_in_pocket = False
+            ex_catching[0].save()
+            senior.caught_count -= 1
+            profile.catching_count -= 1
+
         senior.caught_count += 1
         senior.save()
 
         profile.catching_count += 1
         profile.save()
-
-        ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
-        if ex_catching:
-            ex_catching[0].is_in_pocket = False
 
         catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
 
@@ -43,12 +47,13 @@ def mypocket(request):
     catching_count = profile.catching_count
     catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
 
-    return render(request, 'software/mypocket.html', {'catching_list': catching_list,
+    return render(request, 'software/mypocket.html', {'user_name': user.username,
+                                                      'catching_list': catching_list,
                                                       'catching_count': catching_count})
 
 @login_required
-def catching(request, pk):
-    catching = Catching.objects.get(pk=pk)
+def catching(request, spk, cpk):
+    catching = Catching.objects.get(pk=cpk)
 
     if request.method == 'POST':
         user = request.user
@@ -56,13 +61,12 @@ def catching(request, pk):
         chatting = Chatting.objects.create(
             profile = Profile.objects.get(user=user),
             chat=form['chat'],
-            catching = Catching.objects.get(pk=pk)
+            catching = catching
             )
         catching.chatting_count += 1
         catching.save()
-
-
-    c = get_object_or_404(Catching, pk=pk)
+    
+    #c = get_object_or_404(Catching, pk=pk)
     chatting_list = Chatting.objects.filter(catching=catching).order_by('-modified_time')
     return render(request, 'software/catching.html', {'catching': catching, 'chatting_list': chatting_list})
 
@@ -145,6 +149,8 @@ def senior(request, pk):
             catching.like_count += 1
             catching.save()
 
+
+
     senior = get_object_or_404(Senior, pk=pk)
     catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk)).filter(is_in_pocket=True)
     return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list})
@@ -152,7 +158,13 @@ def senior(request, pk):
 
 @login_required
 def seniors(request):
-    seniors = Senior.objects.all()
+
+    form = request.GET
+    if form.get('searched_name', False):
+        seniors = Senior.objects.filter(name__contains=form['searched_name'])
+
+    else:
+        seniors = Senior.objects.all()
     return render(request, 'software/seniors.html', {'seniors' : seniors})
 
 
@@ -165,11 +177,9 @@ def seniors_search(request):
 
 @login_required
 def training(request):
-    return render(request, 'software/training.html', {})
 
-
-@login_required
-def training_result(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('Only for Superuser')
 
     if request.method == 'POST':
 
@@ -197,19 +207,29 @@ def training_result(request):
             client.tags_save(tids=tid, uid=f['student_id']+'@senior', label=f['student_id'])
             result = client.faces_train(f['student_id']+'@senior')
 
-            return render(request, 'software/training_result.html', {'result': result})
+            return render(request, 'software/training.html', {'result': result})
 
         else:
             return HttpResponseForbidden('form is invalid')
 
     else:
-        return HttpResponseForbidden('Allowed via POST')
+        return render(request, 'software/training.html', {})
 
 
 @login_required
 def rank_freshman(request):
 
-    profile_list = Profile.objects.order_by('-catching_count')
+    form = request.GET
+
+    if form.get('searched_name', False):
+        user_list = User.objects.filter(first_name__contains=form['searched_name'])
+        p_list = []
+        for user in user_list:
+            profile = Profile.objects.get(user=user)
+            p_list.insert(0, profile)
+        profile_list = sorted(p_list, key=lambda x: x.catching_count, reverse=True)
+    else:
+        profile_list = Profile.objects.order_by('-catching_count')
     
     return render(request, 'software/rank_freshman.html', {'profile_list': profile_list})
 
@@ -217,7 +237,12 @@ def rank_freshman(request):
 @login_required
 def rank_senior(request):
 
-    senior_list = Senior.objects.order_by('-caught_count')
+    form = request.GET
+
+    if form.get('searched_name', False):
+        senior_list = Senior.objects.filter(name__contains=form['searched_name']).order_by('-caught_count')
+    else:
+        senior_list = Senior.objects.order_by('-caught_count')
     
     return render(request, 'software/rank_senior.html', {'senior_list': senior_list})
 

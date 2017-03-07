@@ -8,13 +8,12 @@
         <div class="intro-text">catch me!</div>
             <center><img src="../../static/img/intro-img.jpg" class="full-img"></center>
         <center>
-		{% if user.is_authenticated %}
+	{% if user.is_authenticated %}
             <p>hi!! {{ user.get_short_name }}</p>
             <a href="{% url 'logout' %}" class="btn btn-xl">Log Out</a>
             <a href="{% url 'password_change' %}" class="btn btn-xl">비밀번호 변경</a>
         {% else %}
         	<a href="{% url 'login' %}" class="btn btn-xl">Log In</a>
-        	<a href="{% url 'register' %}" class="btn btn-xl">Register</a>
         {% endif %}
         </center>		   
 	</body>

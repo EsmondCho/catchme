@@ -13,7 +13,7 @@
 			<div class="padding-top-sm">
 				<div class="box scrollable">
 					<div>
-						<form action="{% url 'software:catching' catching.id %}" method="POST">{% csrf_token %}
+						<form action="{% url 'software:catching' catching.senior.id catching.id %}" method="POST">{% csrf_token %}
 							
 							<div class="col-md-offset-1 col-md-8">
 								<input type="text" class="form-control form-group input-lg" placeholder="Chat (50자 이하)" id="chat" name="chat">

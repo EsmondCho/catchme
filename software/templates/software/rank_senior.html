@@ -11,15 +11,45 @@
 	        </div>
 	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
 			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="/software/rank/freshman">Saenaegi</a></li>
-				<li role="presentation" class="active"><a href="#">Senior</a></li>
+				<li role="presentation"><a href="/software/rank/freshman">새내기</a></li>
+				<li role="presentation" class="active"><a href="#">선배</a></li>
 			</ul>
-			{% for senior in senior_list %}
-				<p>student_id(username) : {{ senior.student_id }}</p>
-				<p>name : {{ senior.name }}</p>
-				<p>caught_count : {{ senior.caught_count }}</p>
-				<hr />
-			{% endfor %}
+	        	<br />
+                        <form action="{% url 'software:rank_senior' %}" method="GET">{% csrf_token %}
+                                <div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
+                                <div class="input-group stylish-input-group">
+                                        <input type="text" id="searched_name" name="searched_name" class="form-control"  placeholder="검색할 선배의 이름을 입력하세요." >
+                                        <span class="input-group-addon">
+                                        <button type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                </div>
+
+                                <br /><br /><br />
+                        </form>
+			<hr />
+			<table style="width:100%">
+            		<tr>
+				<th>Num</th>
+                		<th>Senior</th>
+                	</tr>
+                	{% for senior in senior_list %}
+                    		<tr>
+                        		<td>{{ forloop.counter }}</td>
+                        		<td>
+                            			<form action="/software/seniors/{{ senior.pk }}">{% csrf_token %}
+                                			<button type="submit" class="btn btn-secondary btn-lg btn-block">
+                              					Name : {{ senior.name }}<br />
+                                    				Student_id : {{ senior.student_id }}<br />
+                                    				catching_count : {{ senior.caught_count }}
+                                			</button>
+                            			</form>
+                        		</td>
+       	             		</tr>
+    	            	{% endfor %}
+            		</table>
 	        </div>
         </div>
 	</body>

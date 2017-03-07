@@ -6,7 +6,7 @@ urlpatterns = [
 
     url(r'^$', introduction, name='introduction'),
 
-    url(r'^mypocket$', mypocket, name='mypocket'),
+    url(r'^mypockets/(?P<pk>[0-9]+)$', mypocket, name='mypocket'),
 
     url(r'^catchsenior$', catchsenior, name='catchsenior'),
 
@@ -15,13 +15,11 @@ urlpatterns = [
     url(r'^rank/freshman$', rank_freshman, name='rank_freshman'),
     url(r'^rank/senior$', rank_senior, name='rank_senior'),
 
-    url(r'^senior/(?P<pk>[0-9]+)/$', senior, name='senior'),
     url(r'^seniors$', seniors, name='seniors'),
-    url(r'^seniors_search$', seniors_search, name='seniors_search'),
+    url(r'^seniors/(?P<pk>[0-9]+)$', senior, name='senior'),
+    url(r'^seniors/(?P<spk>[0-9]+)/catching/(?P<cpk>[0-9]+)$', catching, name='catching'),
 
     url(r'^training$', training, name='training'),
-    url(r'^training_result$', training_result, name='training_result'),
-
-    url(r'^catching/(?P<pk>[0-9]+)/$', catching, name='catching'),
+    #url(r'^training_result$', training_result, name='training_result'),
 
 ]
