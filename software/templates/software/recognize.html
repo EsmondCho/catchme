@@ -18,7 +18,7 @@
 
 			<div class="col-md-4" style="padding-top: 100px">
 
-				<form action="{% url 'software:mypocket' %}" method="POST" name="frm" id="frm">{% csrf_token %}
+				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
 					<div class="input-group" style="height: auto;">
 						<span class="input-group-addon">
 					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
@@ -61,8 +61,12 @@
 				</div>
 				<div style="padding-top: 400px">
 					<input type="hidden" name="image_url" value="{{ image_url }}">
+					<input type="hidden" name="confidence1" value="{{ confidence1 }}">
+					<input type="hidden" name="confidence2" value="{{ confidence2 }}">
+					<input type="hidden" name="confidence3" value="{{ confidence3 }}">
 					<div class="col-md-offset-1 col-md-8">
 						<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
+
 					</div>
 					<div class="col-md-2">
 						<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="To my Pocket">

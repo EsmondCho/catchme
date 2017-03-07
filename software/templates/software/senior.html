@@ -14,29 +14,14 @@
 				<div class="row">
 					{% for catching in catching_list %}
 					<div class="card col-xs-6 col-md-4 senior-info">
-						<a href="/software/catching/{{catching.id}}">
+						<a href="{% url 'software:catching' senior.id catching.id %}">
 							<img src="http://150.95.135.222:8000{{ catching.image.url }}">
 						</a>
 						<div class="card-block">
-							<div class="col-md-8">
-								<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>
-								<p class="card-text">{{ catching.comment }}</p>
-								<p class="card-text">댓글 수: {{ catching.chatting_count }}</p>
-								<p class="card-text">좋아요 수: {{ catching.like_count }}</p>
-							</div>
-							<div class="col-md-4" style="padding-top: 10px">
-								<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
-						        	<div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
-						        		<input type="hidden" name="catching" value="{{ catching.id }}">
-						                <div class="input-group stylish-input-group">
-						                	<button type="submit">
-												<span class="glyphicon glyphicon-thumbs-up"></span>
-											</button>
-						                    </span>
-						                </div>
-							        </div>
-							    </form>
-							</div>
+							<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>
+							<p class="card-text">{{ catching.comment }}</p>
+							<p class="card-text">댓글 수: {{ catching.chatting_count }}</p>
+							<p class="card-text">좋아요 수: {{ catching.like_count }}</p>
 						</div>
 					</div>
 					{% endfor %}

@@ -23,7 +23,6 @@ class Catching(models.Model):
 
 class Senior(models.Model):
     name = models.CharField(max_length=15)
-    #image = models.TextField(null=True)
     image = models.ImageField(upload_to='senior_image/', null=True)
     student_id = models.IntegerField(null=True)
     like_count = models.IntegerField(default=0)

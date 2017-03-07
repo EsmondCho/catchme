@@ -11,15 +11,45 @@
 	        </div>
 	        <div class="col-md-offset-1 col-md-6 box scrollable">
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#">Saenaegi</a></li>
-				<li role="presentation"><a href="/software/rank/senior">Senior</a></li>
+				<li role="presentation" class="active"><a href="#">새내기</a></li>
+				<li role="presentation"><a href="/software/rank/senior">선배</a></li>
 			</ul>
-			{% for profile in profile_list %}
-				<p>student_id(username) : {{ profile.user.username }}</p>
-				<p>name : {{ profile.user.first_name }}</p>
-				<p>catching_count : {{ profile.catching_count }}</p>
-				<hr />
-			{% endfor %}
+			<br />
+                        <form action="{% url 'software:rank_freshman' %}" method="GET">{% csrf_token %}
+                                <div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
+                                <div class="input-group stylish-input-group">
+                                        <input type="text" id="searched_name" name="searched_name" class="form-control"  placeholder="검색할 새내기의 이름을 입력하세요." >
+                                        <span class="input-group-addon">
+                                        <button type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                </div>
+
+				<br /><br /><br />
+                        </form>
+			<hr />
+			<table style="width:100%">
+				<tr>
+					<th>순위</th>
+					<th>새내기</th>
+				</tr>
+				{% for profile in profile_list %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>
+							<form action="/software/mypockets/{{ profile.user.pk }}">
+								<button type="submit" class="btn btn-secondary btn-lg btn-block">
+									Name : {{ profile.user.first_name }}<br />
+									Student_id : {{ profile.user.username }}<br />
+									catching_count : {{ profile.catching_count }}
+								</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
 	        </div>
         </div>
 	</body>
