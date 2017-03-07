@@ -7,9 +7,9 @@
 		{% endblock %}
 		<div class="padding-top max-height">
 	        <div class="col-md-4">
-	        	<img src="../../../static/img/senior-img.jpg" class="padding-top">
+	        	<center><img src="../../../static/img/senior-img.jpg" class="padding-top"></center>
 	        </div>
-	        <div class="col-md-offset-1 col-md-6 box scrollable">
+	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
         		<form action="{% url 'software:seniors_search' %}" method="GET">{% csrf_token %}
 		        	<div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
 		                <div class="input-group stylish-input-group">

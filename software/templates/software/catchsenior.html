@@ -6,11 +6,10 @@
 	    {% block navbar %}
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
-		<center><img src="../../static/img/catch-img.jpg" class="padding-top"></center>
-		<h1 class="text-center">this is catchsenior.html</h1>
+		<center><img src="../../static/img/catch-img.jpg" class="padding-top full-img"></center>
 
 		<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-		    <div class="col-md-6 col-md-offset-3">
+		   	<div class="col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8">
 		        <input type="file" class="form-control form-group input-lg" id="image" name="image">
 		        <center><button type="submit" class="btn btn-xl">submit</button></center>
 		    </div>
