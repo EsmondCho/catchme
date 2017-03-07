@@ -87,6 +87,7 @@ DATABASES = {
 
     }
 }
+DATABASE_OPTIONS = {'charset': 'utf8'}
 
 
 # Internationalization
