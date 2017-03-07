@@ -6,11 +6,11 @@
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
 		<div class="padding-top max-height">
-	        <div class="col-md-offset-1 col-md-4 senior-info">
+	        <div class="col-md-offset-1 col-md-3  senior-info">
         		<h1 class="white-text"> name: {{ senior.name }} </h1>
 	        	<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
 	        </div>
-	        <div class="col-md-6 box scrollable">
+	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
 				<div class="row">
 					{% for catching in catching_list %}
 					<div class="card col-xs-6 col-md-4 senior-info">
@@ -26,7 +26,7 @@
 							</div>
 							<div class="col-md-4" style="padding-top: 10px">
 								<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
-						        	<div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
+						        	<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2" style="padding-top: 20px">
 						        		<input type="hidden" name="catching" value="{{ catching.id }}">
 						                <div class="input-group stylish-input-group">
 						                	<button type="submit">
