@@ -47,7 +47,7 @@ def mypocket(request, pk):
     catching_count = profile.catching_count
     catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
 
-    return render(request, 'software/mypocket.html', {'user_name': user.username,
+    return render(request, 'software/mypocket.html', {'user_name': user.first_name,
                                                       'catching_list': catching_list,
                                                       'catching_count': catching_count})
 
@@ -229,7 +229,7 @@ def rank_freshman(request):
             p_list.insert(0, profile)
         profile_list = sorted(p_list, key=lambda x: x.catching_count, reverse=True)
     else:
-        profile_list = Profile.objects.order_by('-catching_count')
+        profile_list = Profile.objects.filter(is_freshmen=True).order_by('-catching_count')
     
     return render(request, 'software/rank_freshman.html', {'profile_list': profile_list})
 
