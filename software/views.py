@@ -237,7 +237,7 @@ def rank_freshman(request):
             p_list.insert(0, profile)
         profile_list = sorted(p_list, key=lambda x: x.catching_count, reverse=True)
     else:
-        profile_list = Profile.objects.filter(is_freshmen=True).order_by('-catching_count')
+        profile_list = Profile.objects.filter(is_freshman=True).order_by('-catching_count')
     
     return render(request, 'software/rank_freshman.html', {'profile_list': profile_list})
 
