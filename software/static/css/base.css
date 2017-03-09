@@ -243,6 +243,8 @@ h6 {
 .max-height {
   height: 100%;
 }
+
+
 @media only screen
 and (max-device-width: 500px) {
   .max-height {
