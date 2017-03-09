@@ -1,26 +1,39 @@
-<div id="content">
+{% extends 'software/base.html' %}
 
-    <h1>login page</h1>
+{% block content %}
+    <body class="index" style="background-color: #f3cd46">
 
-    <form action="." method="POST">{% csrf_token %}
-        {% if form.errors %}
-        <p class="errornote">Wrong! Please correct the errors below</p>
-        {% endif %}
-
-        <fieldset class="aligned">
-            <div class="form-row">
-                {{ form.username.label_tag }} {{ form.username }}
+        <div>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6"><center>
+                    <img src="../../static/img/login-img.png" class="padding-top full-img" style="width: 400px;">
+                </div>
             </div>
-            <div class="form-row">
-                {{ form.password.label_tag }} {{ form.password }}
-            </div>
-        </fieldset>
+            <form action="." method="POST">{% csrf_token %}
+                {% if form.errors %}
+                <p class="errornote">Wrong! Please correct the errors below</p>
+                {% endif %}
+                <div class="row">
+                <div class="col-md-offset-2 col-md-8 col-sm-10 col-sm-offset-1" style="margin">
+                    <fieldset class="aligned">
+                        <div class="form-row form-control form-group input-lg ">
+                            {{ form.username.label_tag }} {{ form.username }}
+                        </div>
+                        <div class="form-row form-control form-group input-lg">
+                            {{ form.password.label_tag }} {{ form.password }}
+                        </div>
+                    </fieldset>
+                </div>
+                </div>
 
-        <div class="submit-row">
-            <input type="submit" value="Log In" />
-            <input type="hidden" name="next" value="{{ next }}" />
+                <div class="submit-row">
+                    <center><input type="submit" class="btn btn-xl" value="Log In" /></center>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+
+                <script type="text/javascript">document.getElementById('id_username').focus();</script>
+            </form>
         </div>
+    </body>
+{% endblock content %}
 
-        <script type="text/javascript">document.getElementById('id_username').focus();</script>
-    </form>
-</div>
