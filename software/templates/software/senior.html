@@ -6,7 +6,7 @@
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
 		<div class="padding-top max-height">
-	        <div class="col-md-offset-1 col-md-3  senior-info">
+	        <div class="col-md-offset-1 col-md-3  senior-info-img">
         		<h1 class="white-text"> name: {{ senior.name }} </h1>
 	        	<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
 	        </div>
@@ -17,7 +17,7 @@
 						<a href="{% url 'software:catching' senior.id catching.id %}">
 							<img src="http://150.95.135.222:8000{{ catching.image.url }}">
 						</a>
-						<div class="card-block">
+						<div class="card-block-catching">
 							<div>
 								<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>
 								<div class="card-text">

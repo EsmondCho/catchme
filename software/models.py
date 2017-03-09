@@ -17,26 +17,31 @@ class Catching(models.Model):
     profile = models.ForeignKey('Profile')
 
     def save(self, force_insert=False, force_update=False, using=None): 
-        for field in self._meta.fields: 
-            if field.name == 'image': 
+		for field in self._meta.fields: 
+			if field.name == 'image': 
+				try: 
+					image=Image.open(self.image)
+
+					for orientation in ExifTags.TAGS.keys():
+						if ExifTags.TAGS[orientation]=='Orientation':
+							break
  
-                try: 
-                    image=Image.open(self.url) 
-                    exif = dict(image._getexif().items()) 
+					exif = dict(image._getexif().items()) 
+
+					if exif[orientation] == 3:
+						image=image.rotate(180, expand=True)
+					elif exif[orientation] == 6:
+						image=image.rotate(270, expand=True)					
+					elif exif[orientation] == 8: 
+						image=image.rotate(90, expand=True)
+					
+					image.save(self.image.path, 'JPEG')
  
-                    if exif[orientation] == 3: 
-                        image=image.rotate(180, expand=True) 
-                    elif exif[orientation] == 6: 
-                        image=image.rotate(270, expand=True) 
-                    elif exif[orientation] == 8: 
-                        image=image.rotate(90, expand=True) 
- 
-                except (AttributeError, KeyError, IndexError): 
-                    # cases: image don't have getexif 
-                    pass 
- 
-            field.upload_to = 'catching_images/%s' % self.profile.user.username 
-            super(Catching, self).save() 
+				except (AttributeError, KeyError, IndexError):
+					pass
+
+			field.upload_to = 'catching_images/%s' % self.profile.user.username 
+			super(Catching, self).save() 
 
 
 class Senior(models.Model):
@@ -49,10 +54,31 @@ class Senior(models.Model):
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
  
     def save(self, force_insert=False, force_update=False, using=None):
-        for field in self._meta.fields:
-            if field.name == 'image':
-                field.upload_to = 'senior_images/%s' % self.name
-        super(Senior, self).save()
+		for field in self._meta.fields:
+			if field.name == 'image':
+				try:
+					image=Image.open(self.image)
+
+					for orientation in ExifTags.TAGS.keys():
+						if ExifTags.TAGS[orientation]=='Orientation':
+							break
+
+					exif = dict(image._getexif().items())
+
+					if exif[orientation] == 3:
+						image=image.rotate(180, expand=True)
+					elif exif[orientation] == 6:
+						image=image.rotate(270, expand=True)
+					elif exif[orientation] == 8:
+						image=image.rotate(90, expand=True)
+
+					image.save(self.image.path, 'JPEG')
+
+				except (AttributeError, KeyError, IndexError):
+					pass
+        
+			field.upload_to = 'senior_images/%s' % self.name
+			super(Senior, self).save()
 
 
 class Profile(models.Model):
