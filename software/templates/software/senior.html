@@ -18,24 +18,23 @@
 							<img src="http://150.95.135.222:8000{{ catching.image.url }}">
 						</a>
 						<div class="card-block">
-							<div class="col-md-8">
+							<div>
 								<h5 class="card-title">잡은사람: {{ catching.profile.user.username }}</h5>
-								<p class="card-text">{{ catching.comment }}</p>
-								<p class="card-text">댓글 수: {{ catching.chatting_count }}</p>
-								<p class="card-text">좋아요 수: {{ catching.like_count }}</p>
-							</div>
-							<div class="col-md-4" style="padding-top: 10px">
-								<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
-						        	<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2" style="padding-top: 20px">
+								<div class="card-text">
+									<p>{{ catching.comment }}</p>
+									<div class="col-md-8">
+										<p>댓글 수: {{ catching.chatting_count }}</p>
+										<p>좋아요 수: {{ catching.like_count }}</p>
+									</div>
+									<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
 						        		<input type="hidden" name="catching" value="{{ catching.id }}">
 						                <div class="input-group stylish-input-group">
 						                	<button type="submit">
-												<span class="glyphicon glyphicon-thumbs-up"></span>
+												<img src="../../static/img/like-button.png" style="height: 30px; width: 30px;">
 											</button>
-						                    </span>
-						                </div>
-							        </div>
-							    </form>
+								        </div>
+								    </form>
+								</div>
 							</div>
 						</div>
 					</div>
