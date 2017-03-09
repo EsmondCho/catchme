@@ -7,6 +7,7 @@ class Catching(models.Model):
     image = models.ImageField(upload_to='catching_image/', null=True)
     comment = models.TextField(null=True)
     like_count = models.IntegerField(default=0)
+    singo_count = models.IntegerField(default=0)
     chatting_count = models.IntegerField(default=0)
     is_in_pocket = models.BooleanField(default=False)
     confidence = models.IntegerField(default=0)
@@ -16,31 +17,31 @@ class Catching(models.Model):
     profile = models.ForeignKey('Profile')
 
     def save(self, force_insert=False, force_update=False, using=None): 
-        for field in self._meta.fields: 
-            if field.name == 'image': 
- 
-                try: 
-                    image=Image.open(self.image) 
- 
-                    for orientation in ExifTags.TAGS.keys():
-                        if ExifTags.TAGS[orientation]=='Orientation':
-                            break
+		for field in self._meta.fields: 
+			if field.name == 'image': 
+				try: 
+					image=Image.open(self.image)
 
-                    exif = dict(image._getexif().items()) 
+					for orientation in ExifTags.TAGS.keys():
+						if ExifTags.TAGS[orientation]=='Orientation':
+							break
+ 
+					exif = dict(image._getexif().items()) 
 
-                    if exif[orientation] == 3: 
-                        image=image.rotate(180, expand=True) 
-                    elif exif[orientation] == 6: 
-                        image=image.rotate(270, expand=True) 
-                    elif exif[orientation] == 8: 
-                        image=image.rotate(90, expand=True) 
+					if exif[orientation] == 3:
+						image=image.rotate(180, expand=True)
+					elif exif[orientation] == 6:
+						image=image.rotate(270, expand=True)					
+					elif exif[orientation] == 8: 
+						image=image.rotate(90, expand=True)
+					
+					image.save(self.image.path, 'JPEG')
  
-                except (AttributeError, KeyError, IndexError): 
-                    # cases: image don't have getexif 
-                    pass 
- 
-            field.upload_to = 'catching_images/%s' % self.profile.user.username 
-            super(Catching, self).save() 
+				except (AttributeError, KeyError, IndexError):
+					pass
+
+			field.upload_to = 'catching_images/%s' % self.profile.user.username 
+			super(Catching, self).save() 
 
 
 class Senior(models.Model):
@@ -53,31 +54,31 @@ class Senior(models.Model):
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
  
     def save(self, force_insert=False, force_update=False, using=None):
-        for field in self._meta.fields:
-            if field.name == 'image':
-                try:
-                    image=Image.open(self.image)
+		for field in self._meta.fields:
+			if field.name == 'image':
+				try:
+					image=Image.open(self.image)
 
-                    for orientation in ExifTags.TAGS.keys():
-                        if ExifTags.TAGS[orientation]=='Orientation':
-                            break
+					for orientation in ExifTags.TAGS.keys():
+						if ExifTags.TAGS[orientation]=='Orientation':
+							break
 
-                    exif = dict(image._getexif().items())
+					exif = dict(image._getexif().items())
 
-                    if exif[orientation] == 3:
-                        image=image.rotate(180, expand=True)
-                    elif exif[orientation] == 6:
-                        image=image.rotate(270, expand=True)
-                    elif exif[orientation] == 8:
-                        image=image.rotate(90, expand=True)
+					if exif[orientation] == 3:
+						image=image.rotate(180, expand=True)
+					elif exif[orientation] == 6:
+						image=image.rotate(270, expand=True)
+					elif exif[orientation] == 8:
+						image=image.rotate(90, expand=True)
 
-                    image.save(self.image.path, 'JPEG')
+					image.save(self.image.path, 'JPEG')
 
-                except (AttributeError, KeyError, IndexError):
-                    pass
-
-            field.upload_to = 'senior_images/%s' % self.name
-            super(Senior, self).save()
+				except (AttributeError, KeyError, IndexError):
+					pass
+        
+			field.upload_to = 'senior_images/%s' % self.name
+			super(Senior, self).save()
 
 
 class Profile(models.Model):
@@ -103,3 +104,9 @@ class Like(models.Model):
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
  
 
+class Singo(models.Model):
+    profile = models.ForeignKey('Profile')
+    catching = models.ForeignKey('Catching')
+    registered_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
+ 
