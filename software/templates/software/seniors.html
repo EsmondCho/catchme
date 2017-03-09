@@ -25,12 +25,14 @@
 	        	<div class="row">
 					{% for senior in seniors %}
 						<div class="card col-xs-6 col-md-4 senior-info">
-							<a href="/software/seniors/{{senior.id}}">
-								<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="card-img-top">
-							</a>
-							<div class="card-block">
-								<h5 class="card-title">{{ senior.name }}</h5>
-								<p class="card-text">{{ senior.student_id }}학번</p>
+							<div style="height: 50%">
+								<a href="/software/seniors/{{senior.id}}">
+									<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="card-img-top">
+								</a>
+								<div class="card-block">
+									<h5 class="card-title">{{ senior.name }}</h5>
+									<p class="card-text">{{ senior.student_id }}학번</p>
+								</div>
 							</div>
 						</div>
 					{% endfor %}

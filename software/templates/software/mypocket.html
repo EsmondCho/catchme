@@ -1,4 +1,4 @@
-f{% extends 'software/base.html' %}
+{% extends 'software/base.html' %}
 
 {% block content %}
 	<body class="index" style="background-color: #ac775a">
@@ -24,10 +24,9 @@ f{% extends 'software/base.html' %}
 								<p class="card-text">{{ catching.registered_time }}</p>
 							</div>
 						</div>
-					</div>
-				{% endfor %}
+					{% endfor %}
+				</div>
 			</div>
-	        </div>
-	    </div>
+		</div>
 	</body>
 {% endblock content %}
