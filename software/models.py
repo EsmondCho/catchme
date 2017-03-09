@@ -7,6 +7,7 @@ class Catching(models.Model):
     image = models.ImageField(upload_to='catching_image/', null=True)
     comment = models.TextField(null=True)
     like_count = models.IntegerField(default=0)
+    singo_count = models.IntegerField(default=0)
     chatting_count = models.IntegerField(default=0)
     is_in_pocket = models.BooleanField(default=False)
     confidence = models.IntegerField(default=0)
@@ -56,7 +57,7 @@ class Senior(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    is_freshmen = models.BooleanField(default=True)
+    is_freshman = models.BooleanField(default=True)
     catching_count = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -77,3 +78,9 @@ class Like(models.Model):
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
  
 
+class Singo(models.Model):
+    profile = models.ForeignKey('Profile')
+    catching = models.ForeignKey('Catching')
+    registered_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
+ 

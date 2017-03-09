@@ -25,14 +25,15 @@
 									<div class="col-md-8">
 										<p>댓글 수: {{ catching.chatting_count }}</p>
 										<p>좋아요 수: {{ catching.like_count }}</p>
+										<p>신고 수: {{ catching.singo_count }}</p>
 									</div>
 									<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
 						        		<input type="hidden" name="catching" value="{{ catching.id }}">
 						                <div class="input-group stylish-input-group">
-						                	<button type="submit">
+						                	<button type="submit" name='like' value='1'>
 												<img src="../../static/img/like-button.png" style="height: 30px; width: 30px;">
 											</button>
-						                	<button type="submit">
+						                	<button type="submit" name='singo' value='1'>
 												신고
 											</button>
 								        </div>
