@@ -3,12 +3,12 @@
 {% block content %}
 	<body class="index" style="background-color: #196b6a">
 		{% block navbar %}
-	    	{% include 'software/navbar.html' %}
+			{% include 'software/navbar.html' %}
 		{% endblock %}
 		<div class="padding-top max-height">
 	        <div class="col-md-offset-1 col-md-3  senior-info-img">
-        		<h1 class="white-text"> name: {{ senior.name }} </h1>
-	        	<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
+				<h1 class="white-text"> name: {{ senior.name }} </h1>
+				<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
 	        </div>
 	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
 				<div class="row">
@@ -28,12 +28,12 @@
 										<p>신고 수: {{ catching.singo_count }}</p>
 									</div>
 									<form action="{% url 'software:senior' senior.id %}" method="POST">{% csrf_token %}
-						        		<input type="hidden" name="catching" value="{{ catching.id }}">
+										<input type="hidden" name="catching" value="{{ catching.id }}">
 						                <div class="input-group stylish-input-group">
-						                	<button type="submit" name='like' value='1'>
+											<button type="submit" name='like' value='1'>
 												<img src="../../static/img/like-button.png" style="height: 30px; width: 30px;">
 											</button>
-						                	<button type="submit" name='singo' value='1'>
+											<button type="submit" name='singo' value='1'>
 												신고
 											</button>
 								        </div>
