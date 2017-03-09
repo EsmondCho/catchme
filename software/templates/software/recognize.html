@@ -10,69 +10,68 @@
 	        <div class="col-md-4">
 	       		<img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;">
 	        </div>
-	        <div class="senior-info col-md-7 box">
+	        <div class="senior-info col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box">
 	        	<h1>Recognize</h1>
 	        	<div class="col-md-8" style="padding-top: 50px">
 	        		<img src="{{ image_url }}" class="img img-responsive" alt="">
 	        	</div>
 
-			<div class="col-md-4" style="padding-top: 100px">
+				<div class="col-md-4" style="padding-top: 100px">
 
-				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
-					<div class="input-group" style="height: auto;">
-						<span class="input-group-addon">
-					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
-						</span>
-						<strong>
-							<p class="form-control" aria-label="..." style="height: auto;">
-								Confidence : {{ confidence1 }}<br />
-								Name : {{ senior1_name }}<br />
-								Student_id : {{ student_id1 }}
-							</p>
-						</strong>
-					</div>
-					<br />
-					<div class="input-group" style="height: auto;">
-						<span class="input-group-addon">
-					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
-						</span>
-						<strong>
-							<p class="form-control" aria-label="..." style="height: auto;">
-								Confidence : {{ confidence2 }}<br />
-								Name : {{ senior2_name }}<br />
-								Student_id : {{ student_id2 }}
-							</p>
-						</strong>
-					</div>
-					<br />
-					<div class="input-group" style="height: auto;">
-						<span class="input-group-addon">
-					        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
-						</span>
-						<strong>
-							<p class="form-control" aria-label="..." style="height: auto;">
-								Confidence : {{ confidence3 }}<br />
-								Name : {{ senior3_name }}<br />
-								Student_id : {{ student_id3 }}
-							</p>
-						</strong>
-					</div>
-					<br />
+					<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
+						<div class="input-group" style="height: auto;">
+							<span class="input-group-addon">
+						        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
+							</span>
+							<strong>
+								<p class="form-control" aria-label="..." style="height: auto;">
+									Confidence : {{ confidence1 }}<br />
+									Name : {{ senior1_name }}<br />
+									Student_id : {{ student_id1 }}
+								</p>
+							</strong>
+						</div>
+						<br />
+						<div class="input-group" style="height: auto;">
+							<span class="input-group-addon">
+						        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
+							</span>
+							<strong>
+								<p class="form-control" aria-label="..." style="height: auto;">
+									Confidence : {{ confidence2 }}<br />
+									Name : {{ senior2_name }}<br />
+									Student_id : {{ student_id2 }}
+								</p>
+							</strong>
+						</div>
+						<br />
+						<div class="input-group" style="height: auto;">
+							<span class="input-group-addon">
+						        	<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+							</span>
+							<strong>
+								<p class="form-control" aria-label="..." style="height: auto;">
+									Confidence : {{ confidence3 }}<br />
+									Name : {{ senior3_name }}<br />
+									Student_id : {{ student_id3 }}
+								</p>
+							</strong>
+						</div>
+						<br />
+						<div class="col-md-offset-1 col-md-8">
+							<input type="hidden" name="image_url" value="{{ image_url }}">
+							<input type="hidden" name="confidence1" value="{{ confidence1 }}">
+							<input type="hidden" name="confidence2" value="{{ confidence2 }}">
+							<input type="hidden" name="confidence3" value="{{ confidence3 }}">
+							<div class="col-md-offset-1 col-md-8">
+								<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="To my Pocket">
+						</div>
+					</form>
 				</div>
-				<div style="padding-top: 400px">
-					<input type="hidden" name="image_url" value="{{ image_url }}">
-					<input type="hidden" name="confidence1" value="{{ confidence1 }}">
-					<input type="hidden" name="confidence2" value="{{ confidence2 }}">
-					<input type="hidden" name="confidence3" value="{{ confidence3 }}">
-					<div class="col-md-offset-1 col-md-8">
-						<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment">
-
-					</div>
-					<div class="col-md-2">
-						<input type="submit" onclick="return IsEmpty();" class="btn btn-lg btn-success" value="To my Pocket">
-					</div>
-				</form>
-			</div>
 <!--
 					<div class="col-md-4" style="padding-top: 100px">
 						<h3>Confidence : {{ confidence }} %</h3>
@@ -87,7 +86,7 @@
 						</form>
 					</div>
 -->
-	        </div>
+			</div>
         </div>
 	</body>
 {% endblock content %}
