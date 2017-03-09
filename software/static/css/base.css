@@ -243,6 +243,8 @@ h6 {
 .max-height {
   height: 100%;
 }
+
+
 @media only screen
 and (max-device-width: 500px) {
   .max-height {
@@ -253,6 +255,11 @@ and (max-device-width: 500px) {
 .card {
   padding: 10px;
   height: 250px;
+}
+
+.card-senior {
+  padding: 10px;
+  height: 350px;
 }
 
 .card-chatting {

@@ -10,6 +10,7 @@ class Catching(models.Model):
     singo_count = models.IntegerField(default=0)
     chatting_count = models.IntegerField(default=0)
     is_in_pocket = models.BooleanField(default=False)
+	is_recognized = models.BooleanField(default=True)
     confidence = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)

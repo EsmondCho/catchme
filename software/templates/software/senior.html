@@ -13,7 +13,7 @@
 	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
 				<div class="row">
 					{% for catching in catching_list %}
-					<div class="card col-xs-6 col-md-4 senior-info">
+					<div class="card-senior col-xs-6 col-md-4 senior-info">
 						<a href="{% url 'software:catching' senior.id catching.id %}">
 							<img src="http://150.95.135.222:8000{{ catching.image.url }}">
 						</a>
