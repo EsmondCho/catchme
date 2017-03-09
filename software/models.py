@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image, ExifTags
 
 
 class Catching(models.Model):
@@ -14,11 +15,27 @@ class Catching(models.Model):
     senior = models.ForeignKey('Senior', null=True)
     profile = models.ForeignKey('Profile')
 
-    def save(self, force_insert=False, force_update=False, using=None):
-        for field in self._meta.fields:
-            if field.name == 'image':
-                field.upload_to = 'catching_images/%s' % self.profile.user.username
-        super(Catching, self).save()
+    def save(self, force_insert=False, force_update=False, using=None): 
+        for field in self._meta.fields: 
+            if field.name == 'image': 
+ 
+                try: 
+                    image=Image.open(self.url) 
+                    exif = dict(image._getexif().items()) 
+ 
+                    if exif[orientation] == 3: 
+                        image=image.rotate(180, expand=True) 
+                    elif exif[orientation] == 6: 
+                        image=image.rotate(270, expand=True) 
+                    elif exif[orientation] == 8: 
+                        image=image.rotate(90, expand=True) 
+ 
+                except (AttributeError, KeyError, IndexError): 
+                    # cases: image don't have getexif 
+                    pass 
+ 
+            field.upload_to = 'catching_images/%s' % self.profile.user.username 
+            super(Catching, self).save() 
 
 
 class Senior(models.Model):
@@ -39,7 +56,7 @@ class Senior(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    is_freshman = models.BooleanField(default=True)
+    is_freshmen = models.BooleanField(default=True)
     catching_count = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -58,4 +75,5 @@ class Like(models.Model):
     catching = models.ForeignKey('Catching')
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
+ 
 
