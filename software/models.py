@@ -39,7 +39,7 @@ class Senior(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    is_freshmen = models.BooleanField(default=True)
+    is_freshman = models.BooleanField(default=True)
     catching_count = models.IntegerField(default=0)
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -58,5 +58,4 @@ class Like(models.Model):
     catching = models.ForeignKey('Catching')
     registered_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
- 
 
