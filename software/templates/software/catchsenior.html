@@ -7,13 +7,18 @@
 	    	{% include 'software/navbar.html' %}
 		{% endblock %}
 		<center><img src="../../static/img/catch-img.jpg" class="padding-top full-img"></center>
-
-		<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-		   	<div class="col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8">
-		        <input type="file" class="form-control form-group input-lg" id="image" name="image">
-		        <center><button type="submit" class="btn btn-xl">submit</button></center>
-		    </div>
-		</form>
-
+		
+		{% if senior %}
+			<div class="col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8">
+				<h3 style="text-align: center;">넌 왜 새내기도 아닌데 사진을 제출하려고 하냐</h3>
+			</div>
+		{% else %}
+			<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+				<div class="col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8">
+					<input type="file" class="form-control form-group input-lg" id="image" name="image">
+					<center><button type="submit" class="btn btn-xl">submit</button></center>
+				</div>
+			</form>
+		{% endif %}
 	</body>
-{% endblock content %}
+{% endblock %}

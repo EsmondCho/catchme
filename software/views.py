@@ -44,10 +44,15 @@ def mypocket(request, pk):
         catching.is_in_pocket = True
         catching.save()
 
-    catching_count = profile.catching_count
-    catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
+    if profile.is_freshman:
+        catching_count = profile.catching_count
+        catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
+    else:
+        senior = Senior.objects.get(student_id=profile.user.username)
+        catching_count = senior.caught_count
+        catching_list = Catching.objects.filter(senior=senior).filter(is_in_pocket=True)
 
-    return render(request, 'software/mypocket.html', {'user_name': user.username,
+    return render(request, 'software/mypocket.html', {'user_name': user.first_name,
                                                       'catching_list': catching_list,
                                                       'catching_count': catching_count})
 
@@ -66,15 +71,18 @@ def catching(request, spk, cpk):
         catching.chatting_count += 1
         catching.save()
     
-    #c = get_object_or_404(Catching, pk=pk)
     chatting_list = Chatting.objects.filter(catching=catching).order_by('-modified_time')
     return render(request, 'software/catching.html', {'catching': catching, 'chatting_list': chatting_list})
 
 
 @login_required
 def catchsenior(request):
-    return render(request, 'software/catchsenior.html', {})
-
+    u1 = request.user
+    profile = Profile.objects.get(user=u1)
+    if profile.is_freshman == True:
+        return render(request, 'software/catchsenior.html', {})
+    else:
+        return render(request, 'software/catchsenior.html', {'senior': profile})
 
 @login_required
 def recognize(request):

@@ -10,5 +10,5 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     model = Profile
-    field = ['is_freshmen']
+    field = ['is_freshman']
     exclude = ['user']
