@@ -18,7 +18,7 @@
                         <form action="{% url 'software:rank_senior' %}" method="GET">{% csrf_token %}
                                 <div class="col-md-8 col-md-offset-2" style="padding-top: 20px">
                                 <div class="input-group stylish-input-group">
-                                        <input type="text" id="searched_name" name="searched_name" class="form-control"  placeholder="검색할 선배의 이름을 입력하세요." >
+                                        <input type="text" id="searched_name" name="searched_name" class="form-control"  placeholder="검색할 선배의 이름을 입력하세요.">
                                         <span class="input-group-addon">
                                         <button type="submit">
                                                 <span class="glyphicon glyphicon-search"></span>
@@ -32,8 +32,8 @@
 			<hr />
 			<table style="width:100%">
             		<tr>
-				<th>Num</th>
-                		<th>Senior</th>
+						<th>Num</th>
+                		<th></th>
                 	</tr>
                 	{% for senior in senior_list %}
                     		<tr>
@@ -41,7 +41,8 @@
                         		<td>
                             			<form action="/software/seniors/{{ senior.pk }}">{% csrf_token %}
                                 			<button type="submit" class="btn btn-secondary btn-lg btn-block">
-                              					Name : {{ senior.name }}<br />
+													<img src="http://150.95.135.222:8000{{ senior.image.url }}" style="max-height: 100px;"><br />
+													Name : {{ senior.name }}<br />
                                     				Student_id : {{ senior.student_id }}<br />
                                     				catching_count : {{ senior.caught_count }}
                                 			</button>
