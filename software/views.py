@@ -23,26 +23,31 @@ def mypocket(request, pk):
     if request.method == 'POST':
         form = request.POST
 	
-        senior = Senior.objects.get(student_id=form['student_id'])
-        ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
-        if ex_catching:
-            ex_catching[0].is_in_pocket = False
-            ex_catching[0].save()
-            senior.caught_count -= 1
-            profile.catching_count -= 1
+        if form.get('not_recongnized', False):
+            catching = Catching.objects.get(pk=form['catching'])
+            catching.in_recognized = False
 
-        senior.caught_count += 1
-        senior.save()
+        else:
+            senior = Senior.objects.get(student_id=form['student_id'])
+            ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
+            if ex_catching:
+                ex_catching[0].is_in_pocket = False
+                ex_catching[0].save()
+                senior.caught_count -= 1
+                profile.catching_count -= 1
 
-        profile.catching_count += 1
-        profile.save()
+            senior.caught_count += 1
+            senior.save()
 
-        catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
+            profile.catching_count += 1
+            profile.save()
 
-        catching.comment = form['comment']
-        catching.senior = senior
-        catching.is_in_pocket = True
-        catching.save()
+            catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
+
+            catching.comment = form['comment']
+            catching.senior = senior
+            catching.is_in_pocket = True
+            catching.save()
 
     if profile.is_freshman:
         catching_count = profile.catching_count
@@ -93,7 +98,7 @@ def recognize(request):
 
         f = request.POST
         form = ImageUploadForm(request.POST, request.FILES)
-        
+    
         if form.is_valid():
             catching = Catching.objects.create(
                 image=form.cleaned_data['image'],
@@ -123,7 +128,8 @@ def recognize(request):
             senior3 = Senior.objects.get(student_id=student_id3)
             senior3_name = senior3.name          
 
-            return render(request, 'software/recognize.html', {'image_url': image_url,
+            return render(request, 'software/recognize.html', {'catching': catching,
+                                                               'image_url': image_url,
                                                                'senior1_name': senior1_name,
                                                                'confidence1': confidence1,
                                                                'student_id1': student_id1,
