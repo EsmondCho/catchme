@@ -5,11 +5,11 @@ from django.conf import settings
 from django.views.static import serve
 
 from .views import home, UserCreateView
-
+from software.views import introduction
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', home, name='home'),
+    url(r'^$', introduction, name='home'),
 
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/register/$', UserCreateView.as_view(), name='register'),

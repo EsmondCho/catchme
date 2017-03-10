@@ -16,9 +16,8 @@
 					<img src="{{ image_url }}" class="img img-responsive" alt="" style="height: 500px;">
 				</div>
 
-				<div class="col-md-4" style="padding-top: 100px">
-	
-					<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
+				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
+					<div class="col-md-4" style="padding-top: 100px">
 						<h3>잡은 선배를 체크하세요</h3>
 						<div class="input-group" style="height: auto;">
 							<br />
@@ -64,7 +63,6 @@
 							</strong>
 						</div>
 						<br />
-						<input type="submit" class="btn btn-lg btn-danger" name="not_recognized" value="Top 3안에 없음">
 					</div>
 					<div style="padding-top: 400px">
 						<input type="hidden" name="image_url" value="{{ image_url }}">
@@ -79,9 +77,15 @@
 							<br /><br />
 							<input type="submit" class="btn btn-lg btn-success" value="To my Pocket">
 						</div>
-					</form>
-				</div>
-	        </div>
+					</div>
+				</form>
+				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}	
+					<div style="padding-top: 250px">
+						<input type="hidden" name="catching" value="{{ catching.id }}">
+						<input type="submit" class="btn btn-lg btn-danger" name="not_recognized" value="Top3 안에 없음">
+					</div>
+				</form>
+			</div>
         </div>
 	</body>
 {% endblock content %}

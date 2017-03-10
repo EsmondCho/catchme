@@ -195,6 +195,10 @@ h6 {
   padding-top: 200px;
 }
 
+.padding-bottom {
+  padding-bottom: 100px;
+}
+
 /*white-box*/
 .box{
     background-color: white;
@@ -211,7 +215,7 @@ h6 {
 .senior-info img {
   margin: 0 auto;
   max-width: 100%;
-  height: auto;
+  height: 200px;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
 }
@@ -239,6 +243,8 @@ h6 {
 .max-height {
   height: 100%;
 }
+
+
 @media only screen
 and (max-device-width: 500px) {
   .max-height {
@@ -248,14 +254,33 @@ and (max-device-width: 500px) {
 
 .card {
   padding: 10px;
+  height: 250px;
+}
+
+.card-senior {
+  padding: 10px;
+  height: 350px;
+}
+
+.card-chatting {
+  padding: 10px;
   height: 100px;
 }
+
 
 .card-block{
   border: 1px solid rgba(0,0,0,.125);
   border-bottom-left-radius: .5rem;
   border-bottom-right-radius: .5rem;
 }
+
+.card-block-catching{
+  border: 1px solid rgba(0,0,0,.125);
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  height: 170px;
+}
+
 /* serch */
 .stylish-input-group .form-control{
   border-right:0; 

@@ -4,20 +4,20 @@ from PIL import Image, ExifTags
 
 
 class Catching(models.Model):
-    image = models.ImageField(upload_to='catching_image/', null=True)
-    comment = models.TextField(null=True)
-    like_count = models.IntegerField(default=0)
-    singo_count = models.IntegerField(default=0)
-    chatting_count = models.IntegerField(default=0)
-    is_in_pocket = models.BooleanField(default=False)
+	image = models.ImageField(upload_to='catching_image/', null=True)
+	comment = models.TextField(null=True)
+	like_count = models.IntegerField(default=0)
+	singo_count = models.IntegerField(default=0)
+	chatting_count = models.IntegerField(default=0)
+	is_in_pocket = models.BooleanField(default=False)
 	is_recognized = models.BooleanField(default=True)
-    confidence = models.IntegerField(default=0)
-    registered_time = models.DateTimeField(auto_now_add=True)
-    modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
-    senior = models.ForeignKey('Senior', null=True)
-    profile = models.ForeignKey('Profile')
+	confidence = models.IntegerField(default=0)
+	registered_time = models.DateTimeField(auto_now_add=True)
+	modified_time = models.DateTimeField(auto_now=True, blank=True, null=True)
+	senior = models.ForeignKey('Senior', null=True)
+	profile = models.ForeignKey('Profile')
 
-    def save(self, force_insert=False, force_update=False, using=None): 
+	def save(self, force_insert=False, force_update=False, using=None): 
 		for field in self._meta.fields: 
 			if field.name == 'image': 
 				try: 
