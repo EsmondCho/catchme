@@ -184,10 +184,10 @@ def seniors(request):
 
     form = request.GET
     if form.get('searched_name', False):
-        seniors = Senior.objects.filter(name__contains=form['searched_name'])
+        seniors = Senior.objects.filter(name__contains=form['searched_name']).order_by('name')
 
     else:
-        seniors = Senior.objects.all()
+        seniors = Senior.objects.all().order_by('name')
     return render(request, 'software/seniors.html', {'seniors' : seniors})
 
 
