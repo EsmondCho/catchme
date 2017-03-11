@@ -17,7 +17,7 @@
 				</div>
 
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
-					<div class="col-md-4" style="padding-top: 100px">
+					<div class="col-md-4" style="padding-top: 30px;">
 						<h3>잡은 선배를 체크하세요</h3>
 						<div class="input-group" style="height: auto;">
 							<br />
@@ -63,6 +63,19 @@
 							</strong>
 						</div>
 						<br />
+						<div class="input-group" style="height: auto;">
+							<span class="input-group-addon">
+									<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+							</span>
+							<strong>
+								<p class="form-control" aria-label="..." style="height: auto;">
+									<직접 입력><br />
+									(top3 안에 없을경우)
+									
+									<input type="text" class="form-control form-group input-lg" placeholder="이름" id="unrecognized_name" name="unrecognized_name" maxlength="4">
+								</p>
+							</strong>
+						</div>
 					</div>
 					<div style="padding-top: 400px">
 						<input type="hidden" name="image_url" value="{{ image_url }}">
@@ -82,7 +95,6 @@
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}	
 					<div style="padding-top: 250px">
 						<input type="hidden" name="catching" value="{{ catching.id }}">
-						<input type="submit" class="btn btn-lg btn-danger" name="not_recognized" value="Top3 안에 없음">
 					</div>
 				</form>
 			</div>
