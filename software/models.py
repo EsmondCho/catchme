@@ -41,7 +41,6 @@ class Catching(models.Model):
 				except (AttributeError, KeyError, IndexError):
 					pass
 
-			field.upload_to = 'catching_images/%s' % self.profile.user.username 
 			super(Catching, self).save() 
 
 
@@ -78,7 +77,6 @@ class Senior(models.Model):
 				except (AttributeError, KeyError, IndexError):
 					pass
         
-			field.upload_to = 'senior_images/%s' % self.name
 			super(Senior, self).save()
 
 
