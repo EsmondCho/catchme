@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', introduction, name='introduction'),
 
     url(r'^mypockets/(?P<pk>[0-9]+)$', mypocket, name='mypocket'),
+    url(r'^mypockets/None$', mypocket_, name='mypocket_'),
 
     url(r'^catchsenior$', catchsenior, name='catchsenior'),
 

@@ -19,6 +19,13 @@ def introduction(request):
     return render(request, 'software/intro.html', {'login_user_num': len(sessions)})
 
 
+
+@login_required
+def mypocket_(requeset):
+    return redirect('/')
+
+
+
 @login_required
 def mypocket(request, pk):
 
@@ -119,11 +126,10 @@ def recognize(request):
 
             image_url = 'http://150.95.135.222:8000' + catching.image.url
             
-            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
-            result = client.faces_recognize('all', image_url, namespace='senior2')
+            client = FaceClient('ac38c745411845ce89698e1e2469df79', '9d70c1da17fd49609327c8ca154061f1')
+            result = client.faces_recognize('all', image_url, namespace='senior')
 
             try:
-
                 student_id1 = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
                 confidence1 = result['photos'][0]['tags'][0]['uids'][0]['confidence']
                 senior1 = Senior.objects.get(student_id=student_id1)
@@ -241,11 +247,11 @@ def training(request):
 
             image_url = 'http://150.95.135.222:8000' + senior.image.url
 
-            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+            client = FaceClient('ac38c745411845ce89698e1e2469df79', '9d70c1da17fd49609327c8ca154061f1')
             response = client.faces_detect(image_url)
             tid = response['photos'][0]['tags'][0]['tid']
-            client.tags_save(tids=tid, uid=f['student_id']+'@senior2', label=f['student_id'])
-            result = client.faces_train(f['student_id']+'@senior2')
+            client.tags_save(tids=tid, uid=f['student_id']+'@senior', label=f['student_id'])
+            result = client.faces_train(f['student_id']+'@senior')
 
             return render(request, 'software/training.html', {'result': result})
 
