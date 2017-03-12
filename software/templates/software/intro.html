@@ -6,7 +6,7 @@
 		{% endblock navbar %}
 
 		<div class="intro-text">Jigabmon Go!</div>
-        <div class="padding-top">
+        <div class="padding-top-sm max-height">
 			<div class="col-md-4">
 				<center>
 					<img src="../../static/img/intro-img.jpg" class="full-img">
@@ -25,7 +25,7 @@
 				<h3>###공지사항###</h3><hr />
 				{% if user.is_superuser %}<h4>&nbsp;- 현재 로그인 한 유저 : {{ login_user_num }}명</h4><br />{% endif %}
 
-				<h4>&nbsp;- 지갑몬고 계정 : 아이디는 학번, 비밀번호는 톡으로 알려드림</h4><br />
+				<h4>&nbsp;- 아이디, 비밀번호 : 학번 (비밀번호 변경하세요)</h4><br />
 
 				<h4>&nbsp;- 지갑몬고 설명</h4>
 				<h4>&nbsp;&nbsp;1) 새내기가 선배와 함께 사진을 찍는다</h4>
@@ -36,11 +36,12 @@
 				<h4>&nbsp;- 주의사항</h4>
 				<h4>&nbsp;&nbsp;1) 최대한 정면사진</h4>
 				<h4>&nbsp;&nbsp;2) 스노우 / 셀기꾼 ㄴㄴ</h4>
-				<h4>&nbsp;&nbsp;1) 너무 일그러진 표정 또는 작은사진 ㄴㄴ</h4><br />
+				<h4>&nbsp;&nbsp;3) 너무 일그러진 표정 또는 작은사진 ㄴㄴ</h4>
+				<h4>&nbsp;&nbsp;4) 사진 1장당 선배 1명</h4><br />
 
 				<h4>&nbsp;- 상품</h4>
-				<h4>&nbsp;&nbsp;1) 참가만 해도 참가상 드림</h4>
-				<h4>&nbsp;&nbsp;2) 찍은 사진 / 찍힌 사진 수를 기준으로 새내기, 선배, 학생회비 미납부자 모두 학생회가 준비한 상품 증정</h4>
+				<h4>&nbsp;&nbsp;1등: 블루투스 헤드셋, 2등: 여행용크로스백/보스턴백, 3등: 피카츄 인형</h4>
+				<h4>&nbsp;&nbsp;참가상: 페레로로쉐 T5/ 릴타입케이블 </h4>
 
             </div>
 
