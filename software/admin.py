@@ -7,7 +7,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class CatchingAdmin(admin.ModelAdmin):
-    list_display = ('image', 'comment', 'like_count', 'chatting_count', 'is_in_pocket', 'confidence', 'registered_time', 'modified_time', 'senior', 'profile')
+    list_display = ('image', 'comment', 'like_count', 'chatting_count', 'is_in_pocket', 'is_recognized', 'confidence', 'registered_time', 'modified_time', 'senior', 'profile')
 
 
 class SeniorAdmin(admin.ModelAdmin):

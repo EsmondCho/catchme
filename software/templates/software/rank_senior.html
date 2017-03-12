@@ -42,9 +42,10 @@
                             			<form action="/software/seniors/{{ senior.pk }}">{% csrf_token %}
                                 			<button type="submit" class="btn btn-secondary btn-lg btn-block">
 													<img src="http://150.95.135.222:8000{{ senior.image.url }}" style="max-height: 100px;"><br />
-													Name : {{ senior.name }}<br />
-                                    				Student_id : {{ senior.student_id }}<br />
-                                    				catching_count : {{ senior.caught_count }}
+													이름 : {{ senior.name }}<br />
+                                    				학번 : {{ senior.student_id }}<br />
+                                    				잡힌 수 : {{ senior.caught_count }}<br />
+                                    				좋아요 수 : {{ senior.caught_count }}
                                 			</button>
                             			</form>
                         		</td>

@@ -8,12 +8,12 @@
 		{% endblock %}
 		<div class="padding-top">
 	        <div class="col-md-4">
-				<img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;">
+				<center><img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;"></center>
 	        </div>
 	        <div class="senior-info col-md-7 box">
 				<h1>Recognize</h1>
 				<div class="col-md-8" style="padding-top: 50px">
-					<img src="{{ image_url }}" class="img img-responsive" alt="" style="height: 500px;">
+					<img src="{{ image_url }}" class="img img-responsive" alt="" style="max-height: 500px;">
 				</div>
 
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
@@ -65,7 +65,7 @@
 						<br />
 						<div class="input-group" style="height: auto;">
 							<span class="input-group-addon">
-									<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+								<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
 							</span>
 							<strong>
 								<p class="form-control" aria-label="..." style="height: auto;">
@@ -77,7 +77,7 @@
 							</strong>
 						</div>
 					</div>
-					<div style="padding-top: 400px">
+					<div class="padding-top-comment">
 						<input type="hidden" name="image_url" value="{{ image_url }}">
 						<input type="hidden" name="confidence1" value="{{ confidence1 }}">
 						<input type="hidden" name="confidence2" value="{{ confidence2 }}">
@@ -93,7 +93,7 @@
 					</div>
 				</form>
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}	
-					<div style="padding-top: 250px">
+					<div style="padding-top: 20px;">
 						<input type="hidden" name="catching" value="{{ catching.id }}">
 					</div>
 				</form>

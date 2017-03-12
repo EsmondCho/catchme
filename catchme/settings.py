@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'catchme.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jigabmon',
+        'NAME': 'jigabmon_test',
         'USER': 'esmond',
         'PASSWORD': 'jigabmon123',
         'HOST': '',

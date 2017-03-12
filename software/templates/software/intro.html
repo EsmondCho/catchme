@@ -23,7 +23,7 @@
 			</div>
             <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box">
 				<h3>###공지사항###</h3><hr />
-				<h4>&nbsp;- 현재 로그인 한 유저 : {{ login_user_num }}명</h4><br />
+				{% if user.is_superuser %}<h4>&nbsp;- 현재 로그인 한 유저 : {{ login_user_num }}명</h4><br />{% endif %}
 
 				<h4>&nbsp;- 지갑몬고 계정 : 아이디는 학번, 비밀번호는 톡으로 알려드림</h4><br />
 

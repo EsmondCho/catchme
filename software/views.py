@@ -22,45 +22,51 @@ def introduction(request):
 @login_required
 def mypocket(request, pk):
 
-	user = User.objects.get(pk=pk) 
-	profile = Profile.objects.get(user=user)
+    user = User.objects.get(pk=pk) 
+    profile = Profile.objects.get(user=user)
 
-	if request.method == 'POST':
-		form = request.POST
-	
-		if form.get('unrecognized_name', False):
-            senior = Senior.objects.get(name=form['unrecognized_name'])
-		else:
-			senior = Senior.objects.get(student_id=form['student_id'])
-		ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
-		if ex_catching:
-			ex_catching[0].is_in_pocket = False
-			ex_catching[0].save()
-			senior.caught_count -= 1
-			profile.catching_count -= 1
-			
-		senior.caught_count += 1
-		senior.save()
+    if request.method == 'POST':
+        form = request.POST
+    
+        if form.get('unrecognized_name', False):
+            if Senior.objects.filter(name=form['unrecognized_name']):
+                senior = Senior.objects.get(name=form['unrecognized_name'])
+                catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
+                catching.is_recognized = False
+                catching.save()
+            else:
+                return HttpResponseForbidden(form['unrecognized_name']+' is not part in our Event')
+        else:
+            senior = Senior.objects.get(student_id=form['student_id'])
+        ex_catching = Catching.objects.filter(profile=profile).filter(senior=senior).filter(is_in_pocket=True)
+        if ex_catching:
+            ex_catching[0].is_in_pocket = False
+            ex_catching[0].save()
+            senior.caught_count -= 1
+            profile.catching_count -= 1
+            
+        senior.caught_count += 1
+        senior.save()
 
-		profile.catching_count += 1
-		profile.save()
+        profile.catching_count += 1
+        profile.save()
 
-		catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
+        catching = Catching.objects.filter(profile=profile).filter(senior=None).order_by('-registered_time')[0]
 
-		catching.comment = form['comment']
-		catching.senior = senior
-		catching.is_in_pocket = True
-		catching.save()
+        catching.comment = form['comment']
+        catching.senior = senior
+        catching.is_in_pocket = True
+        catching.save()
 
-	if profile.is_freshman:
-		catching_count = profile.catching_count
-		catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
-	else:
-		senior = Senior.objects.get(student_id=profile.user.username)
-		catching_count = senior.caught_count
-		catching_list = Catching.objects.filter(senior=senior).filter(is_in_pocket=True)
+    if profile.is_freshman:
+        catching_count = profile.catching_count
+        catching_list = Catching.objects.filter(profile=profile).filter(is_in_pocket=True)
+    else:
+        senior = Senior.objects.get(student_id=profile.user.username)
+        catching_count = senior.caught_count
+        catching_list = Catching.objects.filter(senior=senior).filter(is_in_pocket=True)
 
-	return render(request, 'software/mypocket.html', {'user_name': user.first_name,
+    return render(request, 'software/mypocket.html', {'user_name': user.first_name,
                                                       'catching_list': catching_list,
                                                       'catching_count': catching_count})
 
@@ -113,36 +119,40 @@ def recognize(request):
 
             image_url = 'http://150.95.135.222:8000' + catching.image.url
             
-            client = FaceClient('ac38c745411845ce89698e1e2469df79', '9d70c1da17fd49609327c8ca154061f1')
-            result = client.faces_recognize('all', image_url, namespace='senior')
+            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
+            result = client.faces_recognize('all', image_url, namespace='senior2')
 
-            student_id1 = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
-            confidence1 = result['photos'][0]['tags'][0]['uids'][0]['confidence']
-            senior1 = Senior.objects.get(student_id=student_id1)
-            senior1_name = senior1.name
+            try:
 
-            student_id2 = result['photos'][0]['tags'][0]['uids'][1]['uid'].split('@')[0]
-            confidence2 = result['photos'][0]['tags'][0]['uids'][1]['confidence']
-            senior2 = Senior.objects.get(student_id=student_id2)
-            senior2_name = senior2.name
+                student_id1 = result['photos'][0]['tags'][0]['uids'][0]['uid'].split('@')[0]
+                confidence1 = result['photos'][0]['tags'][0]['uids'][0]['confidence']
+                senior1 = Senior.objects.get(student_id=student_id1)
+                senior1_name = senior1.name
 
-            student_id3 = result['photos'][0]['tags'][0]['uids'][2]['uid'].split('@')[0]
-            confidence3 = result['photos'][0]['tags'][0]['uids'][2]['confidence']
-            senior3 = Senior.objects.get(student_id=student_id3)
-            senior3_name = senior3.name          
+                student_id2 = result['photos'][0]['tags'][0]['uids'][1]['uid'].split('@')[0]
+                confidence2 = result['photos'][0]['tags'][0]['uids'][1]['confidence']
+                senior2 = Senior.objects.get(student_id=student_id2)
+                senior2_name = senior2.name
 
-            return render(request, 'software/recognize.html', {'catching': catching,
-                                                               'image_url': image_url,
-                                                               'senior1_name': senior1_name,
-                                                               'confidence1': confidence1,
-                                                               'student_id1': student_id1,
-                                                               'senior2_name': senior2_name,
-                                                               'confidence2': confidence2,
-                                                               'student_id2': student_id2,
-                                                               'senior3_name': senior3_name,
-                                                               'confidence3': confidence3,
-                                                               'student_id3': student_id3,
-                                                              })
+                student_id3 = result['photos'][0]['tags'][0]['uids'][2]['uid'].split('@')[0]
+                confidence3 = result['photos'][0]['tags'][0]['uids'][2]['confidence']
+                senior3 = Senior.objects.get(student_id=student_id3)
+                senior3_name = senior3.name          
+
+                return render(request, 'software/recognize.html', {'catching': catching,
+                                                                   'image_url': image_url,
+                                                                   'senior1_name': senior1_name,
+                                                                   'confidence1': confidence1,
+                                                                   'student_id1': student_id1,
+                                                                   'senior2_name': senior2_name,
+                                                                   'confidence2': confidence2,
+                                                                   'student_id2': student_id2,
+                                                                   'senior3_name': senior3_name,
+                                                                   'confidence3': confidence3,
+                                                                   'student_id3': student_id3,
+                                                                  })
+            except:
+                return HttpResponse("We cannot recognize face in yout image")
         else:
             return HttpResponseForbidden('form is invalid')
 
@@ -153,6 +163,8 @@ def recognize(request):
 
 @login_required
 def senior(request, pk):
+
+    senior = get_object_or_404(Senior, pk=pk)
     if request.method == 'POST':        
         user = request.user
         profile = Profile.objects.get(user=user)
@@ -167,6 +179,9 @@ def senior(request, pk):
                     )
                 catching.like_count += 1
                 catching.save()
+                senior.like_count += 1
+                senior.save()
+                
 
         elif form.get('singo', False):
             if not Singo.objects.filter(catching=catching).filter(profile=profile):
@@ -177,7 +192,6 @@ def senior(request, pk):
                 catching.singo_count += 1
                 catching.save()
 
-    senior = get_object_or_404(Senior, pk=pk)
     catching_list = Catching.objects.filter(senior=Senior.objects.get(pk=pk)).filter(is_in_pocket=True)
     return render(request, 'software/senior.html', {'senior': senior, 'catching_list' : catching_list})
 
@@ -227,11 +241,11 @@ def training(request):
 
             image_url = 'http://150.95.135.222:8000' + senior.image.url
 
-            client = FaceClient('ac38c745411845ce89698e1e2469df79', '9d70c1da17fd49609327c8ca154061f1')
+            client = FaceClient('46675e3d05934138bcb4e9b93880e959', 'a62bca207a57467784f86e37a4241b2a')
             response = client.faces_detect(image_url)
             tid = response['photos'][0]['tags'][0]['tid']
-            client.tags_save(tids=tid, uid=f['student_id']+'@senior', label=f['student_id'])
-            result = client.faces_train(f['student_id']+'@senior')
+            client.tags_save(tids=tid, uid=f['student_id']+'@senior2', label=f['student_id'])
+            result = client.faces_train(f['student_id']+'@senior2')
 
             return render(request, 'software/training.html', {'result': result})
 
