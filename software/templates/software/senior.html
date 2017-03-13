@@ -7,9 +7,11 @@
 		{% endblock %}
 		<div class="padding-top max-height">
 	        <div class="col-md-offset-1 col-md-3  senior-info-img">
-				<h1 class="white-text"> 이름: {{ senior.name }} </h1>
-				<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
-				<h1 class="white-text"> 총 좋아요 수: {{ senior.like_count }} </h1>
+				<center>
+					<h1 class="white-text"> 이름: {{ senior.name }} </h1>
+					<img src="http://150.95.135.222:8000{{ senior.image.url }}" class="border-img" style="max-width: 300px">
+					<h1 class="white-text"> 총 좋아요 수: {{ senior.like_count }} </h1>
+				</center>
 	        </div>
 	        <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box scrollable">
 				<div class="row">

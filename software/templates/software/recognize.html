@@ -16,7 +16,7 @@
 					<img src="{{ image_url }}" class="img img-responsive" alt="" style="max-height: 500px;">
 				</div>
 
-				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
+				<form action="{% url 'software:mypocket' request.user.id %}" onsubmit="return validateForm()" method="POST" name="frm" id="frm">{% csrf_token %}
 					<div class="col-md-4" style="padding-top: 30px;">
 						<h3>잡은 선배를 체크하세요</h3>
 						<div class="input-group" style="height: auto;">
