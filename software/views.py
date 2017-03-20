@@ -117,8 +117,12 @@ def doppelganger(request):
 def recognize(request):
 
     if request.method == 'POST':
-        form = request.POST
-        
+        user = request.user
+        profile = Profile.objects.get(user=user)
+
+        f = request.POST
+        form = ImageUploadForm(request.POST, request.FILES)
+
         if form.is_valid():
             catching = Catching.objects.create(
                 image=form.cleaned_data['image'],
