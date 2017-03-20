@@ -7,8 +7,11 @@
 		{% endblock %}
 		<div class="padding-top max-height">
 	        <div class="col-md-offset-1 col-md-3 senior-info-img">
-        		<h1 class="white-text"> name: {{ catching.senior.name }} </h1>
-	        	<img src="http://150.95.135.222:8000{{ catching.image.url }}" class="border-img" style="max-width: 300px">
+				<center>
+        			<h1 class="white-text"> name: {{ catching.senior.name }} </h1>
+	    	    	<img src="http://150.95.135.222:8000{{ catching.image.url }}" class="border-img" style="max-width: 300px">
+					<h3 class="white-text"> comment <br />{{ catching.comment }}</h3>
+				</center>
 	        </div>
 			<div class="padding-top-sm">
 				<div class="col-md-6 col-md-offset-1 col-sm-offset-1 col-sm-10 box scrollable">

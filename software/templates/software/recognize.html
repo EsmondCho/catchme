@@ -16,71 +16,131 @@
 				{% else %}
 					<h1>닮은 선배 찾기</h1>
 				{% endif %}
-				<div class="col-md-8" style="padding-top: 50px">
+			
+				<div class="col-md-6" style="padding-top: 50px">
 					<img src="{{ image_url }}" class="img img-responsive" alt="" style="max-height: 500px;">
 				</div>
 
-				<center>
-				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
-					<div class="col-md-4" style="padding-top: 30px;">
+				<form action="{% url 'software:mypocket' request.user.id %}" onsubmit="return validateForm()" method="POST" name="frm" id="frm">{% csrf_token %}
+					<div class="col-md-6" style="padding-top: 30px;">						
 						{% if catchsenior == '1' %}
 							<h3>잡은 선배를 체크하세요</h3>
 						{% endif %}
-						<div class="input-group" style="height: auto;">
-							<br />
-							{% if catchsenior == '1' %}
+
+						{% if person_num == '1' %}
+							<div class="col-md-12" style="padding-top: 30px;">
+						{% else %}
+							<div class="col-md-6" style="padding-top: 30px;">
+						{% endif %}
+							<div class="input-group" style="height: auto;">
+								<br />
+								{% if catchsenior == '1' %}
+									<span class="input-group-addon">
+										<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
+									</span>
+								{% endif %}
 								<span class="input-group-addon">
 									<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
 								</span>
-							{% endif %}
-							<strong>
-								<p class="form-control" aria-label="..." style="height: auto;">
-									<1위><br />
-									<strong>{{ confidence1 }}%</strong> 일치<br />
-									이름 : {{ senior1_name }}<br />
-									학번 : {{ student_id1 }}
-								</p>
-							</strong>
-						</div>
-						<br />
-						<div class="input-group" style="height: auto;">
+								<strong>
+									<p class="form-control" aria-label="..." style="height: auto;">
+										<1위><br />
+										<strong>{{ confidence1 }}%</strong> 일치<br />
+										{{ senior1_name }}<br />
+										{{ student_id1 }}
+									</p>
+								</strong>
+							</div>
 							<br />
-							{% if catchsenior == '1' %}
-								<span class="input-group-addon">
-										<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
-								</span>
-							{% endif %}
-							<strong>
-								<p class="form-control" aria-label="..." style="height: auto;">
-									<2위><br />
-									<strong>{{ confidence2 }}%</strong> 일치<br />
-									이름 : {{ senior2_name }}<br />
-									학번 : {{ student_id2 }}
-								</p>
-							</strong>
-						</div>
-						<br />
-						<div class="input-group" style="height: auto;">
+							<div class="input-group" style="height: auto;">
+								<br />
+								{% if catchsenior == '1' %}
+									<span class="input-group-addon">
+											<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
+									</span>
+								{% endif %}
+								<strong>
+									<p class="form-control" aria-label="..." style="height: auto;">
+										<2위><br />
+										<strong>{{ confidence2 }}%</strong> 일치<br />
+										{{ senior2_name }}<br />
+										{{ student_id2 }}
+									</p>
+								</strong>
+							</div>
 							<br />
-							{% if catchsenior == '1' %}
-								<span class="input-group-addon">
-										<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
-								</span>
-							{% endif %}
-							<strong>
-								<p class="form-control" aria-label="..." style="height: auto;">
-									<3위><br />
-									<strong>{{ confidence3 }}%</strong> 일치<br />
-									이름 : {{ senior3_name }}<br />
-									학번 : {{ student_id3 }}
-								</p>
-							</strong>
+							<div class="input-group" style="height: auto;">
+								{% if catchsenior == '1' %}
+									<span class="input-group-addon">
+											<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+									</span>
+								{% endif %}
+								<strong>
+									<p class="form-control" aria-label="..." style="height: auto;">
+											<3위><br />
+										<strong>{{ confidence3 }}%</strong> 일치<br />
+										{{ senior3_name }}<br />
+										{{ student_id3 }}
+									</p>
+								</strong>
+							</div>
+							<br />
 						</div>
-						<br />
+						{% if catchsenior == '1' %}
+							{% if person_num == '2' %}
+								<div class="col-md-6" style="padding-top: 30px;">
+									<div class="input-group" style="height: auto;">
+										<br />
+										<span class="input-group-addon">
+											<input type="radio" aria-label="..." name="student_id" value="{{ student_id4 }}" checked="checked" >
+											</span>
+										<strong>
+											<p class="form-control" aria-label="..." style="height: auto;">
+												<1위><br />
+												<strong>{{ confidence4 }}%</strong> 일치<br />
+												{{ senior4_name }}<br />
+												{{ student_id4 }}
+											</p>
+											</strong>
+									</div>
+									<br />
+									<div class="input-group" style="height: auto;">
+										<br />
+										<span class="input-group-addon">
+												<input type="radio" aria-label="..." name="student_id" value="{{ student_id5 }}">
+										</span>
+											<strong>
+											<p class="form-control" aria-label="..." style="height: auto;">
+												<2위><br />
+												<strong>{{ confidence5 }}%</strong> 일치<br />
+												{{ senior5_name }}<br />
+													{{ student_id5 }}
+											</p>
+										</strong>
+									</div>
+									<br />
+									<div class="input-group" style="height: auto;">
+										<span class="input-group-addon">
+												<input type="radio" aria-label="..." name="student_id" value="{{ student_id6 }}">
+										</span>
+										<strong>
+											<p class="form-control" aria-label="..." style="height: auto;">
+												<3위><br />
+												<strong>{{ confidence6 }}%</strong> 일치<br />
+												{{ senior6_name }}<br />
+												{{ student_id6 }}
+											</p>
+										</strong>
+									</div>
+									<br />
+								</div>
+							{% endif %}
+						{% endif %}
+
 						{% if catchsenior == '1' %}
 							<div class="input-group" style="height: auto;">
 								<span class="input-group-addon">
-									<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+									<input type="radio" aria-label="...">
 								</span>
 								<strong>
 									<p class="form-control" aria-label="..." style="height: auto;">
