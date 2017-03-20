@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^mypockets/None$', mypocket_, name='mypocket_'),
 
     url(r'^catchsenior$', catchsenior, name='catchsenior'),
+    url(r'^doppelganger$', doppelganger, name='doppelganger'),
 
     url(r'^recognize$', recognize, name='recognize'),
 

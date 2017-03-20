@@ -10,20 +10,29 @@
 	        <div class="col-md-4">
 				<center><img src="../../static/img/success-img.png" class="padding-top" style="width: 400px;"></center>
 	        </div>
-	        <div class="senior-info col-md-7 box">
-				<h1>Recognize</h1>
+	        <div class="senior-info col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box">
+	        	{% if catchsenior == '1' %}
+					<h1>Recognize</h1>
+				{% else %}
+					<h1>닮은 선배 찾기</h1>
+				{% endif %}
 				<div class="col-md-8" style="padding-top: 50px">
 					<img src="{{ image_url }}" class="img img-responsive" alt="" style="max-height: 500px;">
 				</div>
 
+				<center>
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}
 					<div class="col-md-4" style="padding-top: 30px;">
-						<h3>잡은 선배를 체크하세요</h3>
+						{% if catchsenior == '1' %}
+							<h3>잡은 선배를 체크하세요</h3>
+						{% endif %}
 						<div class="input-group" style="height: auto;">
 							<br />
-							<span class="input-group-addon">
+							{% if catchsenior == '1' %}
+								<span class="input-group-addon">
 									<input type="radio" aria-label="..." name="student_id" value="{{ student_id1 }}" checked="checked" >
-							</span>
+								</span>
+							{% endif %}
 							<strong>
 								<p class="form-control" aria-label="..." style="height: auto;">
 									<1위><br />
@@ -36,9 +45,11 @@
 						<br />
 						<div class="input-group" style="height: auto;">
 							<br />
-							<span class="input-group-addon">
-									<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
-							</span>
+							{% if catchsenior == '1' %}
+								<span class="input-group-addon">
+										<input type="radio" aria-label="..." name="student_id" value="{{ student_id2 }}">
+								</span>
+							{% endif %}
 							<strong>
 								<p class="form-control" aria-label="..." style="height: auto;">
 									<2위><br />
@@ -50,9 +61,12 @@
 						</div>
 						<br />
 						<div class="input-group" style="height: auto;">
-							<span class="input-group-addon">
-									<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
-							</span>
+							<br />
+							{% if catchsenior == '1' %}
+								<span class="input-group-addon">
+										<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+								</span>
+							{% endif %}
 							<strong>
 								<p class="form-control" aria-label="..." style="height: auto;">
 									<3위><br />
@@ -63,35 +77,41 @@
 							</strong>
 						</div>
 						<br />
-						<div class="input-group" style="height: auto;">
-							<span class="input-group-addon">
-								<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
-							</span>
-							<strong>
-								<p class="form-control" aria-label="..." style="height: auto;">
-									<직접 입력><br />
-									(top3 안에 없을경우)
-									
-									<input type="text" class="form-control form-group input-lg" placeholder="이름" id="unrecognized_name" name="unrecognized_name" maxlength="4">
-								</p>
-							</strong>
-						</div>
+						{% if catchsenior == '1' %}
+							<div class="input-group" style="height: auto;">
+								<span class="input-group-addon">
+									<input type="radio" aria-label="..." name="student_id" value="{{ student_id3 }}">
+								</span>
+								<strong>
+									<p class="form-control" aria-label="..." style="height: auto;">
+										<직접 입력><br />
+										(top3 안에 없을경우)
+										
+										<input type="text" class="form-control form-group input-lg" placeholder="이름" id="unrecognized_name" name="unrecognized_name" maxlength="4">
+									</p>
+								</strong>
+							</div>
+						{% endif %}
 					</div>
-					<div class="padding-top-comment">
-						<input type="hidden" name="image_url" value="{{ image_url }}">
-						<input type="hidden" name="confidence1" value="{{ confidence1 }}">
-						<input type="hidden" name="confidence2" value="{{ confidence2 }}">
-						<input type="hidden" name="confidence3" value="{{ confidence3 }}">
-						<div class="col-md-offset-1 col-md-8">
-							<br /><br />
-							<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment" maxlength="20" required>
+
+					{% if catchsenior == '1' %}
+						<div class="padding-top-comment">
+							<input type="hidden" name="image_url" value="{{ image_url }}">
+							<input type="hidden" name="confidence1" value="{{ confidence1 }}">
+							<input type="hidden" name="confidence2" value="{{ confidence2 }}">
+							<input type="hidden" name="confidence3" value="{{ confidence3 }}">
+							<div class="col-md-offset-1 col-md-8">
+								<br /><br />
+								<input type="text" class="form-control form-group input-lg" placeholder="Comment (20자 이하)" id="comment" name="comment" maxlength="20" required>
+							</div>
+							<div class="col-md-2">
+								<br /><br />
+								<input type="submit" class="btn btn-lg btn-success" value="To my Pocket">
+							</div>
 						</div>
-						<div class="col-md-2">
-							<br /><br />
-							<input type="submit" class="btn btn-lg btn-success" value="To my Pocket">
-						</div>
-					</div>
+					{% endif %}
 				</form>
+				</center>
 				<form action="{% url 'software:mypocket' request.user.id %}" method="POST" name="frm" id="frm">{% csrf_token %}	
 					<div style="padding-top: 20px;">
 						<input type="hidden" name="catching" value="{{ catching.id }}">

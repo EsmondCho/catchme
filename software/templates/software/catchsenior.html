@@ -15,6 +15,7 @@
 		{% else %}
 			<form action="{% url 'software:recognize' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
 				<div class="col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8">
+					<input type="hidden" id="catchsenior" name="catchsenior" value="1">
 					<input type="file" class="form-control form-group input-lg" id="image" name="image">
 					<center><button type="submit" class="btn btn-xl">submit</button></center>
 				</div>
