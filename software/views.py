@@ -152,9 +152,9 @@ def recognize(request):
                 confidence3 = result['photos'][0]['tags'][0]['uids'][2]['confidence']
                 senior3 = Senior.objects.get(student_id=student_id3)
                 senior3_name = senior3.name          
-                
-                catchsenior = form['catchsenior']
-        
+            
+                catchsenior = f['catchsenior']
+     
                 if len(result['photos'][0]['tags']) > 1:
                     student_id4 = result['photos'][0]['tags'][1]['uids'][0]['uid'].split('@')[0]
                     confidence4 = result['photos'][0]['tags'][1]['uids'][0]['confidence']
@@ -170,7 +170,7 @@ def recognize(request):
                     confidence6 = result['photos'][0]['tags'][1]['uids'][2]['confidence']
                     senior6 = Senior.objects.get(student_id=student_id6)
                     senior6_name = senior6.name
-                            
+                        
                     return render(request, 'software/recognize.html', {'catching': catching,
                                                                        'image_url': image_url,
                                                                        'senior1_name': senior1_name,
@@ -209,8 +209,10 @@ def recognize(request):
                                                                    'catchsenior': catchsenior,
                                                                    'person_num': '1',
                                                                   })
-            except:
-                return HttpResponse("Error - Please contact to kakaotalk ID : mnmnm059")
+            except IndexError as err:
+                return HttpResponse("Index Error - Please contact to kakaotalk ID : mnmnm059")
+            except Exception as err:
+                return HttpResponse(str(err) + "- Please contact to kakaotalk ID : mnmnm059")
         else:
             return HttpResponseForbidden('form is invalid')
     else:

@@ -19,12 +19,14 @@
 						<a href="{% url 'login' %}" class="btn btn-xl">로그인</a>
 					{% endif %}
 				</center>
+				<center><img src="../../static/img/sofa-x-isteam-logo.png" class="full-img padding-top-sm" style="max-width: 300px;"></center>
 
 			</div>
             <div class="col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-10 box">
 				<h3>###공지사항###</h3><hr />
 				{% if user.is_superuser %}<h4>&nbsp;- 현재 로그인 한 유저 : {{ login_user_num }}명</h4><br />{% endif %}
 
+				<h4 style="color: #ED0000;">&nbsp;이벤트 끝~~~~ 다들 참여해주셔서 감사합니다ㅠ(꾸벅)</h4><br />
 				<h4>&nbsp;- 아이디, 비밀번호 : 학번 (비밀번호 변경하세요)</h4><br />
 
 				<h4>&nbsp;- 지갑몬고 설명</h4>

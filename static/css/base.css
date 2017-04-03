@@ -207,6 +207,9 @@ and (max-device-width: 500px) {
 .padding-bottom {
   padding-bottom: 100px;
 }
+.padding-bottom-sm {
+  padding-bottom: 50px;
+}
 
 /*white-box*/
 .box{
